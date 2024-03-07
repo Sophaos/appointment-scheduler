@@ -10,13 +10,13 @@ import { AppointmentsModule } from './appointments/appointments.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'postgres',
       host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'test',
-      entities: [],
+      port: 5432,
+      username: 'postgres',
+      password: 'mysecretpassword',
+      database: 'mydatabase',
+      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     ClientsModule,
