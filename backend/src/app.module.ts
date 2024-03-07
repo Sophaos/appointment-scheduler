@@ -15,7 +15,7 @@ import { AppointmentsModule } from './appointments/appointments.module';
       port: 5432,
       username: 'postgres',
       password: 'mysecretpassword',
-      database: 'mydatabase',
+      database: 'postgres',
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
