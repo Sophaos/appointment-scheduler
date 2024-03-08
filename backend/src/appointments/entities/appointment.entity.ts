@@ -18,10 +18,10 @@ export class Appointment {
   @Column()
   title: string;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'timestamptz' })
   start: Date;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'timestamptz' })
   end: Date;
 
   @Column()
