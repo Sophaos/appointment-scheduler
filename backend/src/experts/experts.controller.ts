@@ -16,27 +16,30 @@ export class ExpertsController {
   constructor(private readonly expertsService: ExpertsService) {}
 
   @Post()
-  create(@Body() createExpertDto: CreateExpertDto) {
+  async create(@Body() createExpertDto: CreateExpertDto) {
     return this.expertsService.create(createExpertDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.expertsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.expertsService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateExpertDto: UpdateExpertDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateExpertDto: UpdateExpertDto,
+  ) {
     return this.expertsService.update(+id, updateExpertDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.expertsService.remove(+id);
   }
 }

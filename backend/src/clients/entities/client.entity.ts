@@ -1,15 +1,13 @@
 import { Appointment } from 'src/appointments/entities/appointment.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { AbstractEntity } from 'src/database/abstract.entity';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
-export class Client {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Client extends AbstractEntity<Client> {
   @Column()
   nickname: string;
 
-  @Column()
+  @Column({ unique: true })
   phoneNumber: string;
 
   @Column()

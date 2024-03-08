@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateExpertDto } from './dto/create-expert.dto';
 import { UpdateExpertDto } from './dto/update-expert.dto';
+import { Expert } from './entities/expert.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, EntityManager } from 'typeorm';
 
 @Injectable()
 export class ExpertsService {
-  create(createExpertDto: CreateExpertDto) {
-    return 'This action adds a new expert';
+  constructor(
+    @InjectRepository(Expert)
+    private readonly expertsRepository: Repository<Expert>,
+    private readonly entityManager: EntityManager,
+  ) {}
+  async create(createExpertDto: CreateExpertDto) {
+    const item = new Expert(createExpertDto);
+    await this.entityManager.save(item);
   }
 
-  findAll() {
-    return `This action returns all experts`;
+  async findAll() {
+    return this.expertsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} expert`;
+  async findOne(id: number) {
+    return this.expertsRepository.findOneBy({ id });
   }
 
-  update(id: number, updateExpertDto: UpdateExpertDto) {
-    return `This action updates a #${id} expert`;
+  async update(id: number, updateExpertDto: UpdateExpertDto) {
+    const item = this.expertsRepository.findOneBy({ id });
+    await this.entityManager.save(item);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} expert`;
+  async remove(id: number) {
+    this.expertsRepository.delete(id);
   }
 }

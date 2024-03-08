@@ -1,26 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
+import { Client } from './entities/client.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { EntityManager, Repository } from 'typeorm';
 
 @Injectable()
 export class ClientsService {
-  create(createClientDto: CreateClientDto) {
-    return 'This action adds a new client';
+  constructor(
+    @InjectRepository(Client)
+    private readonly expertsRepository: Repository<Client>,
+    private readonly entityManager: EntityManager,
+  ) {}
+  async create(createClientDto: CreateClientDto) {
+    const item = new Client(createClientDto);
+    await this.entityManager.save(item);
   }
 
-  findAll() {
-    return `This action returns all clients`;
+  async findAll() {
+    return this.expertsRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} client`;
+  async findOne(id: number) {
+    return this.expertsRepository.findOneBy({ id });
   }
 
-  update(id: number, updateClientDto: UpdateClientDto) {
-    return `This action updates a #${id} client`;
+  async update(id: number, updateClientDto: UpdateClientDto) {
+    const item = this.expertsRepository.findOneBy({ id });
+    await this.entityManager.save(item);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} client`;
+  async remove(id: number) {
+    this.expertsRepository.delete(id);
   }
 }

@@ -1,8 +1,8 @@
 import { Client } from 'src/clients/entities/client.entity';
+import { AbstractEntity } from 'src/database/abstract.entity';
 import { Service } from 'src/services/entities/service.entity';
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   ManyToOne,
   JoinColumn,
@@ -11,10 +11,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Appointment {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Appointment extends AbstractEntity<Appointment> {
   @Column()
   title: string;
 
