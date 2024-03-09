@@ -15,3 +15,11 @@ services:
       - "3000:3000"
     depends_on:
       - db
+  
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - db
+      - backend
