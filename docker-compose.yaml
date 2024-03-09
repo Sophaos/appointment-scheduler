@@ -15,6 +15,15 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
   
   frontend:
     build: ./frontend
@@ -23,3 +32,12 @@ services:
     depends_on:
       - db
       - backend
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json

@@ -11,7 +11,7 @@ import { AppointmentsModule } from './appointments/appointments.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'db', // use this when done
+      host: 'db',
       port: 5432,
       username: 'postgres',
       password: 'mysecretpassword',
