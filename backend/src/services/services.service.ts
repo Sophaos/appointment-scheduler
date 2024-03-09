@@ -3,7 +3,9 @@ import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Service } from './entities/service.entity';
-import { EntityManager, Repository } from 'typeorm';
+import { EntityManager, In, Repository } from 'typeorm';
+import { Appointment } from 'src/appointments/entities/appointment.entity';
+import { Expert } from 'src/experts/entities/expert.entity';
 
 @Injectable()
 export class ServicesService {
@@ -13,7 +15,19 @@ export class ServicesService {
     private readonly entityManager: EntityManager,
   ) {}
   async create(createServiceDto: CreateServiceDto) {
-    const item = new Service(createServiceDto);
+    const { appointmentIds, expertId, ...data } = createServiceDto;
+    const appointments = await this.entityManager.findBy(Appointment, {
+      id: In(appointmentIds),
+    });
+
+    const expert = await this.entityManager.findOneBy(Expert, { id: expertId });
+
+    const item = new Service({
+      ...data,
+      appointments,
+      expert,
+    });
+
     await this.entityManager.save(item);
   }
 

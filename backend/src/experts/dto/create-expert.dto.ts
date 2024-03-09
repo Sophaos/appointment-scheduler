@@ -1,1 +1,5 @@
-export class CreateExpertDto {}
+export class CreateExpertDto {
+  nickname: string;
+  color: string;
+  serviceIds: number[];
+}

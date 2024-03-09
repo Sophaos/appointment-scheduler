@@ -3,7 +3,8 @@ import { CreateExpertDto } from './dto/create-expert.dto';
 import { UpdateExpertDto } from './dto/update-expert.dto';
 import { Expert } from './entities/expert.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, EntityManager } from 'typeorm';
+import { Repository, EntityManager, In } from 'typeorm';
+import { Service } from 'src/services/entities/service.entity';
 
 @Injectable()
 export class ExpertsService {
@@ -13,7 +14,16 @@ export class ExpertsService {
     private readonly entityManager: EntityManager,
   ) {}
   async create(createExpertDto: CreateExpertDto) {
-    const item = new Expert(createExpertDto);
+    const { serviceIds, ...data } = createExpertDto;
+    const services = await this.entityManager.findBy(Service, {
+      id: In(serviceIds),
+    });
+
+    const item = new Expert({
+      ...data,
+      services,
+    });
+
     await this.entityManager.save(item);
   }
 
