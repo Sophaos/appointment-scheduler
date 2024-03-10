@@ -1,0 +1,13 @@
+# Exclude node_modules directory
+node_modules
+
+# Exclude any build artifacts
+/dist
+/build
+/out
+/public
+
+# Exclude any temporary or cache files
+.tmp
+.cache
+*.log
