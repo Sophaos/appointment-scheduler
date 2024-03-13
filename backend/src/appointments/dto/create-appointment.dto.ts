@@ -4,5 +4,5 @@ export class CreateAppointmentDto {
   end: Date;
   notes: string;
   clientId: number;
-  serviceIds: number[];
+  serviceId: number;
 }

@@ -11,6 +11,9 @@ export class Client extends AbstractEntity<Client> {
   phoneNumber: string;
 
   @Column()
+  email: string;
+
+  @Column()
   rating: number;
 
   @Column()

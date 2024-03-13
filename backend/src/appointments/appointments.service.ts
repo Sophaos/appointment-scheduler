@@ -3,7 +3,7 @@ import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { Appointment } from './entities/appointment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, EntityManager, In } from 'typeorm';
+import { Repository, EntityManager } from 'typeorm';
 import { Service } from 'src/services/entities/service.entity';
 import { Client } from 'src/clients/entities/client.entity';
 
@@ -15,9 +15,9 @@ export class AppointmentsService {
     private readonly entityManager: EntityManager,
   ) {}
   async create(createAppointmentDto: CreateAppointmentDto) {
-    const { serviceIds, clientId, ...data } = createAppointmentDto;
-    const services = await this.entityManager.findBy(Service, {
-      id: In(serviceIds),
+    const { serviceId, clientId, ...data } = createAppointmentDto;
+    const service = await this.entityManager.findOneBy(Service, {
+      id: serviceId,
     });
 
     const client = await this.entityManager.findOneBy(Client, {
@@ -26,7 +26,7 @@ export class AppointmentsService {
 
     const item = new Appointment({
       ...data,
-      services,
+      service,
       client,
     });
 
