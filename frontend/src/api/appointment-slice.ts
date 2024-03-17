@@ -15,7 +15,7 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
     updateAppointment: builder.mutation({
       query: ({ form }) => ({
         url: "/api/update-appointment",
-        method: "POST",
+        method: "PATCH",
         body: JSON.stringify({
           appointmentId: form.appointmentId,
           scheduleDate: form.scheduleDate,
@@ -50,7 +50,7 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
     deleteAppointment: builder.mutation({
       query: ({ form }) => ({
         url: "/api/delete-appointment",
-        method: "POST",
+        method: "DELETE",
         body: JSON.stringify({ scheduleDate: form.scheduleDate, appointmentId: form.appointmentId }),
       }),
       invalidatesTags: ["Appointments"],

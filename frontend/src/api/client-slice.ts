@@ -6,8 +6,7 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
     getClients: builder.query({
       query: () => ({
         url: "/api/get-clients",
-        method: "POST",
-
+        method: "GET",
         body: JSON.stringify({}),
       }),
       providesTags: ["Clients"],
@@ -15,7 +14,7 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
     updateClient: builder.mutation({
       query: (request) => ({
         url: "/api/update-client",
-        method: "POST",
+        method: "PATCH",
 
         body: JSON.stringify({
           clientId: request.id,
@@ -46,7 +45,7 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
     deleteClient: builder.mutation({
       query: (request: any) => ({
         url: "/api/soft-delete-client",
-        method: "POST",
+        method: "DELETE",
 
         body: JSON.stringify({
           clientId: request,

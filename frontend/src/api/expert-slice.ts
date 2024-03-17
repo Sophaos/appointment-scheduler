@@ -5,7 +5,7 @@ export const extendedTechnicianApiSlice = apiSlice.injectEndpoints({
     getTechnicians: builder.query({
       query: () => ({
         url: "/api/get-experts",
-        method: "POST",
+        method: "GET",
 
         body: JSON.stringify({}),
       }),
@@ -14,7 +14,7 @@ export const extendedTechnicianApiSlice = apiSlice.injectEndpoints({
     updateTechnician: builder.mutation({
       query: (request) => ({
         url: "/api/update-expert",
-        method: "POST",
+        method: "PATCH",
 
         body: JSON.stringify({
           technicianId: request.id,
@@ -41,7 +41,7 @@ export const extendedTechnicianApiSlice = apiSlice.injectEndpoints({
     deleteTechnician: builder.mutation({
       query: (request) => ({
         url: "/api/soft-delete-expert",
-        method: "POST",
+        method: "DELETE",
         body: JSON.stringify({
           technicianId: request,
         }),

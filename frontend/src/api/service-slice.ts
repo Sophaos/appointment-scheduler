@@ -5,7 +5,7 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
     getServices: builder.query({
       query: () => ({
         url: "/api/get-services",
-        method: "POST",
+        method: "GET",
 
         body: JSON.stringify({}),
       }),
@@ -14,7 +14,7 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
     updateService: builder.mutation({
       query: (request) => ({
         url: "/api/update-service",
-        method: "POST",
+        method: "PATCH",
 
         body: JSON.stringify({
           serviceId: request.id,
@@ -39,7 +39,7 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
     deleteService: builder.mutation({
       query: (request) => ({
         url: "/api/soft-delete-service",
-        method: "POST",
+        method: "DELETE",
 
         body: JSON.stringify({
           serviceId: request,
