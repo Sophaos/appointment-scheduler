@@ -15,17 +15,19 @@ export class ServicesService {
     private readonly entityManager: EntityManager,
   ) {}
   async create(createServiceDto: CreateServiceDto) {
-    const { appointmentIds, expertId, ...data } = createServiceDto;
+    const { appointmentIds, expertIds, ...data } = createServiceDto;
     const appointments = await this.entityManager.findBy(Appointment, {
       id: In(appointmentIds),
     });
 
-    const expert = await this.entityManager.findOneBy(Expert, { id: expertId });
+    const experts = await this.entityManager.findBy(Expert, {
+      id: In(expertIds),
+    });
 
     const item = new Service({
       ...data,
       appointments,
-      expert,
+      experts,
     });
 
     await this.entityManager.save(item);

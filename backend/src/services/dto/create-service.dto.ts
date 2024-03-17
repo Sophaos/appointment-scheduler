@@ -1,6 +1,6 @@
 export class CreateServiceDto {
   name: string;
   color: string;
-  expertId: number;
+  expertIds: number[];
   appointmentIds: number[];
 }
