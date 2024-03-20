@@ -8,6 +8,10 @@ const localizer = momentLocalizer(moment) // or globalizeLocalizer
 
 export const BaseCalendar = () => (
   <div className="myCustomHeight">
+    {/* Tailwindcss test */}
+    {/* <h1 className="text-3xl font-bold underline">
+      Hello world!
+    </h1> */}
     <Calendar
       localizer={localizer}
       events={[]}

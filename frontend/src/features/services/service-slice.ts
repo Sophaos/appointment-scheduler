@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "api/api-slice";
 
 export const extendedServiceApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getServices: builder.query({
+    getServices: builder.query<any, void>({
       query: () => ({
         url: "/api/get-services",
         method: "GET",

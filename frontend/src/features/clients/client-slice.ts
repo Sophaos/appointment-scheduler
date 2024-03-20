@@ -3,7 +3,7 @@ import { apiSlice } from "api/api-slice";
 
 export const extendedClientApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getClients: builder.query({
+    getClients: builder.query<any, void>({
       query: () => ({
         url: "/api/get-clients",
         method: "GET",

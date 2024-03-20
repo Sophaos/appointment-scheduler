@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "api/api-slice";
 
 export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAppointments: builder.query({
+    getAppointments: builder.query<any, any>({
       query: (request) => ({
         url: "/api/read-appointments",
         method: "POST",

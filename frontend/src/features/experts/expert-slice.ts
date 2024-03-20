@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "api/api-slice";
 
-export const extendedTechnicianApiSlice = apiSlice.injectEndpoints({
+export const extendedExpertApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getTechnicians: builder.query({
+    getExperts: builder.query<any, void>({
       query: () => ({
         url: "/api/get-experts",
         method: "GET",
@@ -11,13 +12,13 @@ export const extendedTechnicianApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Experts"],
     }),
-    updateTechnician: builder.mutation({
+    updateExpert: builder.mutation({
       query: (request) => ({
         url: "/api/update-expert",
         method: "PATCH",
 
         body: JSON.stringify({
-          technicianId: request.id,
+          expertId: request.id,
           nickname: request.nickname,
           serviceIdList: request.serviceIdList.join(";"),
           color: request.color,
@@ -25,7 +26,7 @@ export const extendedTechnicianApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Experts"],
     }),
-    createTechnician: builder.mutation({
+    createExpert: builder.mutation({
       query: (request) => ({
         url: "/api/create-expert",
         method: "POST",
@@ -38,12 +39,12 @@ export const extendedTechnicianApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Experts"],
     }),
-    deleteTechnician: builder.mutation({
+    deleteExpert: builder.mutation({
       query: (request) => ({
         url: "/api/soft-delete-expert",
         method: "DELETE",
         body: JSON.stringify({
-          technicianId: request,
+          expertId: request,
         }),
       }),
       invalidatesTags: ["Experts"],
@@ -51,4 +52,4 @@ export const extendedTechnicianApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetTechniciansQuery, useUpdateTechnicianMutation, useCreateTechnicianMutation, useDeleteTechnicianMutation } = extendedTechnicianApiSlice;
+export const { useGetExpertsQuery, useUpdateExpertMutation, useCreateExpertMutation, useDeleteExpertMutation } = extendedExpertApiSlice;
