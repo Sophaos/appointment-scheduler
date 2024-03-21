@@ -3,10 +3,11 @@ import React from 'react'
 
 export const ClientsPage = () => {
 
-  const { error, isLoading } = useGetClientsQuery();
+  const { data, error, isLoading } = useGetClientsQuery();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>An error occured.</div>;
+  console.log(data)
   return (
     <div>ClientsPage</div>
   )

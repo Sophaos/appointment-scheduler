@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "api/api-slice";
 
+const BASE_URL = "clients";
 export const extendedClientApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getClients: builder.query<any, void>({
       query: () => ({
-        url: "/api/get-clients",
+        url: BASE_URL,
         method: "GET",
-        body: JSON.stringify({}),
       }),
       providesTags: ["Clients"],
     }),
     updateClient: builder.mutation({
       query: (request) => ({
-        url: "/api/update-client",
+        url: BASE_URL,
         method: "PATCH",
 
         body: JSON.stringify({
@@ -29,7 +29,7 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
     }),
     createClient: builder.mutation({
       query: (request) => ({
-        url: "/api/create-client",
+        url: BASE_URL,
         method: "POST",
 
         body: JSON.stringify({
@@ -44,7 +44,7 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
     }),
     deleteClient: builder.mutation({
       query: (request: any) => ({
-        url: "/api/soft-delete-client",
+        url: BASE_URL,
         method: "DELETE",
 
         body: JSON.stringify({

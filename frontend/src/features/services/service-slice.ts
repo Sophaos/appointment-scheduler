@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "api/api-slice";
 
+const BASE_URL = "services";
+
 export const extendedServiceApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getServices: builder.query<any, void>({
       query: () => ({
-        url: "/api/get-services",
+        url: BASE_URL,
         method: "GET",
-
-        body: JSON.stringify({}),
       }),
       providesTags: ["Services"],
     }),
     updateService: builder.mutation({
       query: (request) => ({
-        url: "/api/update-service",
+        url: BASE_URL,
         method: "PATCH",
 
         body: JSON.stringify({
@@ -27,7 +27,7 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
     }),
     createService: builder.mutation({
       query: (request) => ({
-        url: "/api/create-service",
+        url: BASE_URL,
         method: "POST",
 
         body: JSON.stringify({
@@ -39,7 +39,7 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
     }),
     deleteService: builder.mutation({
       query: (request) => ({
-        url: "/api/soft-delete-service",
+        url: BASE_URL,
         method: "DELETE",
 
         body: JSON.stringify({

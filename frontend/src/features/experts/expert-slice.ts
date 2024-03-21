@@ -1,22 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "api/api-slice";
 
+const BASE_URL = "experts";
 export const extendedExpertApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getExperts: builder.query<any, void>({
       query: () => ({
-        url: "/api/get-experts",
+        url: BASE_URL,
         method: "GET",
-
-        body: JSON.stringify({}),
       }),
       providesTags: ["Experts"],
     }),
     updateExpert: builder.mutation({
       query: (request) => ({
-        url: "/api/update-expert",
+        url: BASE_URL,
         method: "PATCH",
-
         body: JSON.stringify({
           expertId: request.id,
           nickname: request.nickname,
@@ -28,7 +26,7 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
     }),
     createExpert: builder.mutation({
       query: (request) => ({
-        url: "/api/create-expert",
+        url: BASE_URL,
         method: "POST",
 
         body: JSON.stringify({
@@ -41,7 +39,7 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
     }),
     deleteExpert: builder.mutation({
       query: (request) => ({
-        url: "/api/soft-delete-expert",
+        url: BASE_URL,
         method: "DELETE",
         body: JSON.stringify({
           expertId: request,

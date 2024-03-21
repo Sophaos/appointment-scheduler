@@ -1,21 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { apiSlice } from "api/api-slice";
 
+const BASE_URL = "appointments";
 export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAppointments: builder.query<any, any>({
-      query: (request) => ({
-        url: "/api/read-appointments",
-        method: "POST",
-        body: JSON.stringify({
-          scheduleDate: request.scheduleDate,
-        }),
+    getAppointments: builder.query<any, void>({
+      query: () => ({
+        url: BASE_URL,
+        method: "GET",
       }),
       providesTags: ["Appointments"],
     }),
     updateAppointment: builder.mutation({
       query: ({ form }) => ({
-        url: "/api/update-appointment",
+        url: BASE_URL,
         method: "PATCH",
         body: JSON.stringify({
           appointmentId: form.appointmentId,
@@ -33,7 +31,7 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
     }),
     createAppointment: builder.mutation({
       query: ({ form }) => ({
-        url: "/api/create-appointment",
+        url: BASE_URL,
         method: "POST",
         body: JSON.stringify({
           scheduleDate: form.scheduleDate,
@@ -50,7 +48,7 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
     }),
     deleteAppointment: builder.mutation({
       query: ({ form }) => ({
-        url: "/api/delete-appointment",
+        url: BASE_URL,
         method: "DELETE",
         body: JSON.stringify({ scheduleDate: form.scheduleDate, appointmentId: form.appointmentId }),
       }),

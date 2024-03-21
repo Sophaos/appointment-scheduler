@@ -11,7 +11,8 @@ import { AppointmentsModule } from './appointments/appointments.module';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'db',
+      // host: 'db', // revert when using full docker yaml
+      host: 'localhost',
       port: 5432,
       username: 'postgres',
       password: 'mysecretpassword',
