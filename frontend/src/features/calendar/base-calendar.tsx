@@ -17,7 +17,7 @@ export const BaseCalendar = () => (
       events={[]}
       startAccessor="start"
       endAccessor="end"
-      style={{ height: "95vh" }}
+      style={{ height: "93vh" }}
     />
   </div>
 )
