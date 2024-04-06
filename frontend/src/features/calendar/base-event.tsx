@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const BaseCalendarEvent = () => {
+export const BaseEvent = () => {
   return (
     <div>BaseCalendarEvent</div>
   )

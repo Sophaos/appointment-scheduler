@@ -1,4 +1,3 @@
-import { AppointmentSideFilters } from 'features/appointments/appointment-side-filters';
 import { useGetAppointmentsQuery } from 'features/appointments/appointment-slice';
 import { BaseCalendar } from 'features/calendar/base-calendar'
 
@@ -11,7 +10,6 @@ export const AppointmentsPage = () => {
 
   return (
     <>
-    <AppointmentSideFilters />
     <BaseCalendar />
     </>
   )
