@@ -1,6 +1,6 @@
-
-import "primereact/resources/themes/lara-light-cyan/theme.css";
-import 'primeicons/primeicons.css';
+// import "primereact/resources/themes/lara-light-cyan/theme.css";
+// import 'primeicons/primeicons.css';
+// import 'App.css';
 import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { AppointmentsPage } from "pages/appointment-page";
