@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
 
 const BASE_URL = "appointments";
@@ -56,5 +57,25 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
     }),
   }),
 });
+
+const initialState = {
+  appointmentModalOpen: false,
+};
+
+export const appointmentSlice = createSlice({
+  name: "appointment",
+  initialState,
+  reducers: {
+    setAppointmentModalOpen(state, action) {
+      state.appointmentModalOpen = action.payload;
+    },
+  },
+  selectors: {
+    selectAppointmentModalOpen: (state) => state.appointmentModalOpen,
+  },
+});
+
+export const { setAppointmentModalOpen } = appointmentSlice.actions;
+export const { selectAppointmentModalOpen } = appointmentSlice.selectors;
 
 export const { useGetAppointmentsQuery, useUpdateAppointmentMutation, useCreateAppointmentMutation, useDeleteAppointmentMutation } = extendedAppointmentApiSlice;

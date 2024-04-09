@@ -11,6 +11,7 @@ import { MonthEvent } from './month-event'
 import { AgendaEvent } from './agenda-event'
 import { ResourceHeader } from './resource-header'
 import { CalendarToolbar } from './calendar-toolbar'
+import { events } from './events'
 // Setup the localizer by providing the moment (or globalize, or Luxon) Object
 // to the correct localizer.
 const DnDCalendar = withDragAndDrop(Calendar);
@@ -49,41 +50,17 @@ export const BaseCalendar = () => {
 
   const min = useMemo(() => new Date(1972, 0, 1, 9, 0, 0, 0), []);
   const max = useMemo(() => new Date(1972, 0, 1, 20, 0, 0, 0), []);
-
-  const events = [
-  {
-    title: "Meeting with Team",
-    start: new Date(new Date().setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60))),
-    end: new Date(new Date().setHours(Math.floor(Math.random() * 24) + 1, Math.floor(Math.random() * 60))),
-  },
-  {
-    title: "Lunch Break",
-    start: new Date(new Date().setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60))),
-    end: new Date(new Date().setHours(Math.floor(Math.random() * 24) + 1, Math.floor(Math.random() * 60))),
-  },
-  {
-    title: "Client Call",
-    start: new Date(new Date().setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60))),
-    end: new Date(new Date().setHours(Math.floor(Math.random() * 24) + 1, Math.floor(Math.random() * 60))),
-  },
-  {
-    title: "Project Presentation",
-    start: new Date(new Date().setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60))),
-    end: new Date(new Date().setHours(Math.floor(Math.random() * 24) + 1, Math.floor(Math.random() * 60))),
-  },
-  {
-    title: "Team Training",
-    start: new Date(new Date().setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60))),
-    end: new Date(new Date().setHours(Math.floor(Math.random() * 24) + 1, Math.floor(Math.random() * 60))),
-  }
-];
-
-console.log(events);
-
+  const resources = [{ id: 1, nickname: "Alex" },
+    { id: 2, nickname: "John" },
+    { id: 3, nickname: "Camille" },
+    { id: 4, nickname: "Justine" },
+    { id: 5, nickname: "Vicki" }
+  ]
   
   return (
     <div className="myCustomHeight">
-    <DnDCalendar
+      <DnDCalendar
+        defaultView='day'
         formats={formats}
         components={components}
         dayLayoutAlgorithm="no-overlap"
@@ -97,10 +74,10 @@ console.log(events);
         max={max}
         events={events}
         popup
-        // resourceAccessor={"technicianIds"}
-        resources={undefined}
-        // resourceIdAccessor={"id"}
-        // resourceTitleAccessor={"nickname"}
+        resourceAccessor={(e: any) => e.serviceId}
+        resources={resources}
+        resourceIdAccessor={(e: any) => e.id}
+        resourceTitleAccessor={(e: any) => e.nickname}
       views={["day", "agenda", "week", "month"]}
       style={{ height: "93vh" }}
     />

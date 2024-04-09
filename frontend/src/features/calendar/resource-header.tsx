@@ -1,7 +1,8 @@
 import React from 'react'
-
-export const ResourceHeader = () => {
+// props: { index, label, resource }
+export const ResourceHeader = ({ index, label, resource }) => {
+  console.log(index, label, resource)
   return (
-    <div>ResourceHeader</div>
+    <div>{label}</div>
   )
 }
