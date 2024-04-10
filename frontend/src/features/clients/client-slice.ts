@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
 
 const BASE_URL = "clients";
@@ -55,5 +56,25 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
     }),
   }),
 });
+
+const initialState = {
+  isClientDrawerVisible: false,
+};
+
+export const clientSlice = createSlice({
+  name: "client",
+  initialState,
+  reducers: {
+    setClientDrawerVisibility(state, action) {
+      state.isClientDrawerVisible = action.payload;
+    },
+  },
+  selectors: {
+    selectIsClientDrawerVisible: (state) => state.isClientDrawerVisible,
+  },
+});
+
+export const { setClientDrawerVisibility } = clientSlice.actions;
+export const { selectIsClientDrawerVisible } = clientSlice.selectors;
 
 export const { useGetClientsQuery, useUpdateClientMutation, useCreateClientMutation, useDeleteClientMutation } = extendedClientApiSlice;

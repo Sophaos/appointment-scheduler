@@ -59,23 +59,23 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
 });
 
 const initialState = {
-  appointmentModalOpen: false,
+  isAppointmentDrawerVisible: false,
 };
 
 export const appointmentSlice = createSlice({
   name: "appointment",
   initialState,
   reducers: {
-    setAppointmentModalOpen(state, action) {
-      state.appointmentModalOpen = action.payload;
+    setAppointmentDrawerVisibility(state, action) {
+      state.isAppointmentDrawerVisible = action.payload;
     },
   },
   selectors: {
-    selectAppointmentModalOpen: (state) => state.appointmentModalOpen,
+    selectIsAppointmentDrawerVisible: (state) => state.isAppointmentDrawerVisible,
   },
 });
 
-export const { setAppointmentModalOpen } = appointmentSlice.actions;
-export const { selectAppointmentModalOpen } = appointmentSlice.selectors;
+export const { setAppointmentDrawerVisibility } = appointmentSlice.actions;
+export const { selectIsAppointmentDrawerVisible } = appointmentSlice.selectors;
 
 export const { useGetAppointmentsQuery, useUpdateAppointmentMutation, useCreateAppointmentMutation, useDeleteAppointmentMutation } = extendedAppointmentApiSlice;

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
 
 const BASE_URL = "services";
@@ -50,5 +51,25 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
     }),
   }),
 });
+
+const initialState = {
+  isServiceDrawerVisible: false,
+};
+
+export const serviceSlice = createSlice({
+  name: "service",
+  initialState,
+  reducers: {
+    setServiceDrawerVisibility(state, action) {
+      state.isServiceDrawerVisible = action.payload;
+    },
+  },
+  selectors: {
+    selectIsServiceDrawerVisible: (state) => state.isServiceDrawerVisible,
+  },
+});
+
+export const { setServiceDrawerVisibility } = serviceSlice.actions;
+export const { selectIsServiceDrawerVisible } = serviceSlice.selectors;
 
 export const { useGetServicesQuery, useUpdateServiceMutation, useCreateServiceMutation, useDeleteServiceMutation } = extendedServiceApiSlice;

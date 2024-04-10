@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
 
 const BASE_URL = "experts";
@@ -49,5 +50,25 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
     }),
   }),
 });
+
+const initialState = {
+  isExpertDrawerVisible: false,
+};
+
+export const expertSlice = createSlice({
+  name: "expert",
+  initialState,
+  reducers: {
+    setExpertDrawerVisibility(state, action) {
+      state.isExpertDrawerVisible = action.payload;
+    },
+  },
+  selectors: {
+    selectIsExpertDrawerVisible: (state) => state.isExpertDrawerVisible,
+  },
+});
+
+export const { setExpertDrawerVisibility } = expertSlice.actions;
+export const { selectIsExpertDrawerVisible } = expertSlice.selectors;
 
 export const { useGetExpertsQuery, useUpdateExpertMutation, useCreateExpertMutation, useDeleteExpertMutation } = extendedExpertApiSlice;
