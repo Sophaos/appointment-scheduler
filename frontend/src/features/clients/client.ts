@@ -1,9 +1,19 @@
 export interface Client {
+  id?: number;
   nickname: string;
   phoneNumber: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   notes: string;
-  //   appointments: Appointment[];
 }
+
+export const DEFAULT_CLIENT: Client = {
+  id: 0,
+  nickname: "",
+  phoneNumber: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  notes: "",
+};

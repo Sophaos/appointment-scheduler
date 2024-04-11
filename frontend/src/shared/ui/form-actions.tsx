@@ -12,7 +12,7 @@ interface FormActionsProps {
 
 export const FormActions = ({ onCancel, handleDelete, isEnabled = false, hasId, isProcessing, isDirty }: FormActionsProps) => {
   return (
-    <div className="d-flex justify-content-between gap-3 mt-3">
+    <div className="flex justify-between gap-3 mb-10">
       <Button type="button" color="error" outlined onClick={onCancel} label="Discard change" />
       {handleDelete && hasId && (
         <Button type="button" color="error" onClick={handleDelete} label="Delete"/>

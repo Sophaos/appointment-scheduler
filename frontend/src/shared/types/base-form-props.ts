@@ -1,6 +1,6 @@
 export interface BaseFormProps<T> {
   onCancel: () => void;
   onConfirm: (data: T) => void;
-  data: T;
+  data?: T;
   isProcessing: boolean;
 }
