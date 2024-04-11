@@ -10,7 +10,7 @@ import { Appointment } from 'src/appointments/entities/appointment.entity';
 export class ClientsService {
   constructor(
     @InjectRepository(Client)
-    private readonly expertsRepository: Repository<Client>,
+    private readonly clientRepository: Repository<Client>,
     private readonly entityManager: EntityManager,
   ) {}
   async create(createClientDto: CreateClientDto) {
@@ -28,19 +28,19 @@ export class ClientsService {
   }
 
   async findAll() {
-    return this.expertsRepository.find();
+    return this.clientRepository.find();
   }
 
   async findOne(id: number) {
-    return this.expertsRepository.findOneBy({ id });
+    return this.clientRepository.findOneBy({ id });
   }
 
   async update(id: number, updateClientDto: UpdateClientDto) {
-    const item = this.expertsRepository.findOneBy({ id });
+    const item = this.clientRepository.findOneBy({ id });
     await this.entityManager.save(item);
   }
 
   async remove(id: number) {
-    this.expertsRepository.delete(id);
+    this.clientRepository.delete(id);
   }
 }
