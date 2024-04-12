@@ -3,7 +3,8 @@ import { whiteContrastColors } from "../service/services-colors";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { FormActions } from "@/components/form-actions";
+import { BaseFormProps } from "shared/types/base-form-props";
+import { Expert } from "./expert";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -28,18 +29,18 @@ const nailsOptions = [
   { id: "REAL_NAILS", label: "Real Nails" },
 ];
 
-export const TechnicianForm = ({ onCancel, onConfirm, form, optionsServices, isProcessing }) => {
+export const TechnicianForm = ({ onCancel, onConfirm, data, isProcessing }: BaseFormProps<Expert>) => {
   const {
     handleSubmit,
     control,
     formState: { errors, isDirty },
   } = useForm({
     resolver: zodResolver(technicianFormSchema),
-    defaultValues: form,
+    defaultValues: data,
   });
 
-  const onSubmit = (data) => {
-    onConfirm(data);
+  const onSubmit = (dataForm: Expert) => {
+    onConfirm(dataForm);
   };
 
   return (

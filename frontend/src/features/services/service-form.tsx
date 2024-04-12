@@ -3,11 +3,14 @@ import { Box, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextFie
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { DEFAULT_SERVICE, Service } from "./service";
+import { BaseFormProps } from "shared/types/base-form-props";
+import { FormActions } from "shared/ui/form-actions";
 
 const serviceFormSchema = z.object({
   name: z.string().min(1, "The name must be at least 1 character."),
   color: z.string().min(1, "A color must be selected."),
-  defaultDuration: z.number().min(1, "The default duration is required."),
+  duration: z.number().min(1, "The default duration is required."),
 });
 
 const durationOptions = [
@@ -19,7 +22,7 @@ const durationOptions = [
   { id: 90, label: "90 minutes" },
 ];
 
-export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing }) => {
+export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing }: BaseFormProps<Service>) => {
   const {
     handleSubmit,
     control,
@@ -29,7 +32,7 @@ export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing }) => {
     resolver: zodResolver(serviceFormSchema),
   });
 
-  const onSubmit = (formData) => {
+  const onSubmit = (formData: Service) => {
     onConfirm(formData);
   };
 
@@ -42,10 +45,10 @@ export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing }) => {
             control={control}
             render={({ field }) => <TextField {...field} label="Name" fullWidth margin="normal" placeholder="Enter a service" error={!!errors.name} helperText={errors?.name?.message} />}
           />
-          <FormControl fullWidth margin="normal" error={!!errors.defaultDuration}>
+          <FormControl fullWidth margin="normal" error={!!errors.duration}>
             <InputLabel id="defaultDuration">Default Duration</InputLabel>
             <Controller
-              name="defaultDuration"
+              name="duration"
               control={control}
               render={({ field }) => (
                 <Select {...field} value={field.value} label="Default Duration" labelId="defaultDuration" id="defaultDuration" fullWidth>
@@ -79,7 +82,7 @@ export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing }) => {
             <FormHelperText>{errors.color && `${errors?.color?.message}`}</FormHelperText>
           </FormControl>
         </div>
-        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!form?.id} isProcessing={isProcessing} />
+        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} />
       </div>
     </form>
   );
