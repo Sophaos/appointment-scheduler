@@ -13,7 +13,7 @@ export const ClientDrawer = () => {
   const isProcessing = false;
 
   return (
-    <BaseDrawer isOpen={isClientDrawerVisible} title="Client" onHide={handleHide}>
+    <BaseDrawer isOpen={isClientDrawerVisible} title="Client" onHide={handleHide} icon={"pi pi-user-plus"}>
       <ClientForm onCancel={handleCancel} onConfirm={handleConfirm} data={undefined} isProcessing={isProcessing} />
     </BaseDrawer>
   );

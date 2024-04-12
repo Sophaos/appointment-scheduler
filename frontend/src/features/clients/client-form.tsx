@@ -43,8 +43,8 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="h-full overflow-y-hidden">
-      <div className="flex flex-col justify-between h-full overflow-y-hidden">
+    <form onSubmit={handleSubmit(onSubmit)} className="h-full">
+      <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col space-y-3">
           <Controller
             name="nickname"
@@ -52,7 +52,7 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
             render={({ field }) =>
               <>
                 <InputText {...field} placeholder="John" invalid={!!errors.nickname} aria-describedby="nickname-error" />
-                <small id="nickname-error">
+                <small id="nickname-error" className="text-red-600">
                     {errors.nickname?.message}
                 </small>
               </>
@@ -64,7 +64,7 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
             render={({ field }) =>
               <>
                 <InputText {...field} placeholder="John" invalid={!!errors.firstName} aria-describedby="firstName-error"/>
-                <small id="firstName-error">
+                <small id="firstName-error" className="text-red-600">
                     {errors.firstName?.message} 
                 </small>
               </>
@@ -76,7 +76,7 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
             render={({ field }) =>
               <>
                 <InputText {...field} placeholder="Smith" invalid={!!errors.lastName} aria-describedby="lastName-error"/>
-                <small id="lastName-error">
+                <small id="lastName-error" className="text-red-600">
                     {errors.lastName?.message}
                 </small>
               </>
@@ -88,7 +88,7 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
             render={({ field }) => (
               <>
                 <InputMask {...field} id="phone" mask="(999) 999-9999" placeholder="(999) 999-9999" aria-describedby="phoneNumber-error"/>
-                <small id="phoneNumber-error">
+                <small id="phoneNumber-error" className="text-red-600">
                   {errors.phoneNumber?.message}
                 </small>
               </>
@@ -100,7 +100,7 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
             render={({ field }) =>
               <>
                 <InputText {...field} placeholder="example@example.com" invalid={!!errors.email} />
-                <small id="username-error">
+                <small id="username-error" className="text-red-600">
                     {errors.email?.message}
                 </small>
               </>

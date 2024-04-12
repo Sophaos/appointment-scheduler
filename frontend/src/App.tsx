@@ -8,6 +8,7 @@ import { ClientsPage } from "pages/clients-page";
 import { ExpertsPage } from "pages/experts-page";
 import { ServicesPage } from "pages/services-page";
 import { BaseLayout } from "layout/base-layout";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -29,9 +30,8 @@ function App() {
             </Route>
             <Route path="*" element={<Navigate to="/appointments" />} />
           </Routes>
-        </BrowserRouter>
       <ToastContainer
-        position="top-right"
+        position="bottom-left"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -43,6 +43,7 @@ function App() {
         theme="colored"
         style={{ width: "350px" }}
       />
+        </BrowserRouter>
     </>
   );
 }
