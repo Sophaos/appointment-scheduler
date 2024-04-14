@@ -1,11 +1,12 @@
-import { Box, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
-
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { DEFAULT_SERVICE, Service } from "./service";
 import { BaseFormProps } from "shared/types/base-form-props";
 import { FormActions } from "shared/ui/form-actions";
+import { InputText } from "primereact/inputtext";
+import { Dropdown } from "primereact/dropdown";
+import { whiteContrastColors } from "shared/utils/colors-utils";
 
 const serviceFormSchema = z.object({
   name: z.string().min(1, "The name must be at least 1 character."),
@@ -37,50 +38,39 @@ export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing }: BaseFor
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="h-100">
-      <div className="d-flex flex-column justify-content-between h-100">
-        <div className="d-flex flex-column">
+    <form onSubmit={handleSubmit(onSubmit)} className="h-full">
+      <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col space-y-3">
           <Controller
             name="name"
             control={control}
-            render={({ field }) => <TextField {...field} label="Name" fullWidth margin="normal" placeholder="Enter a service" error={!!errors.name} helperText={errors?.name?.message} />}
+            render={({ field }) =>
+                <InputText {...field} placeholder="John" invalid={!!errors.name} aria-describedby="name-error"/>
+            }
           />
-          <FormControl fullWidth margin="normal" error={!!errors.duration}>
-            <InputLabel id="defaultDuration">Default Duration</InputLabel>
+          <small id="name-error" className="text-red-600">
+            {errors.name?.message} 
+          </small>
             <Controller
               name="duration"
               control={control}
               render={({ field }) => (
-                <Select {...field} value={field.value} label="Default Duration" labelId="defaultDuration" id="defaultDuration" fullWidth>
-                  {durationOptions.map((option) => (
-                    <MenuItem key={option.id} value={option.id}>
-                      <Typography>{option.label}</Typography>
-                    </MenuItem>
-                  ))}
-                </Select>
+                    <Dropdown value={field.value} optionValue="id" options={durationOptions} optionLabel="label" placeholder="Select a View" />
               )}
-            />
-            <FormHelperText>{errors.color && `${errors?.color?.message}`}</FormHelperText>
-          </FormControl>
-          <FormControl fullWidth margin="normal" error={!!errors.color}>
-            <InputLabel id="color">Identifying Color</InputLabel>
+          />
+          <small id="duration-error" className="text-red-600">
+            {errors.duration?.message} 
+          </small>
             <Controller
               name="color"
               control={control}
               render={({ field }) => (
-                <Select {...field} label="Identifying Color" labelId="color" id="color" fullWidth>
-                  {blackContrastColors.map((option) => (
-                    <MenuItem key={option.id} value={option.id}>
-                      <Box sx={{ backgroundColor: option.id, padding: "2px" }}>
-                        <Typography sx={{ color: "black" }}>{option.label}</Typography>
-                      </Box>
-                    </MenuItem>
-                  ))}
-                </Select>
+                <Dropdown value={field.value} optionValue="id" options={whiteContrastColors} optionLabel="label" placeholder="Select a View" />
               )}
-            />
-            <FormHelperText>{errors.color && `${errors?.color?.message}`}</FormHelperText>
-          </FormControl>
+          />
+          <small id="color-error" className="text-red-600">
+            {errors.color?.message} 
+          </small>
         </div>
         <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} />
       </div>

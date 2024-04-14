@@ -9,6 +9,7 @@ import { ServiceDrawer } from 'features/services/service-drawer';
 export const AppointmentsPage = () => {
   const { data, error, isLoading } = useGetAppointmentsQuery();
 
+  console.log(data, error, isLoading);
   return (
     <>
       <BaseCalendar />
