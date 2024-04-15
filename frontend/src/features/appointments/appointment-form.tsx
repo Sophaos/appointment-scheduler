@@ -3,11 +3,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { BaseFormProps } from "shared/types/base-form-props";
 import { DEFAULT_APPOINTMENT, Appointment } from "./appointment";
-import { InputText } from "primereact/inputtext";
 import { FormActions } from "shared/ui/form-actions";
 import { Dropdown } from "primereact/dropdown";
 import { InputTextarea } from "primereact/inputtextarea";
-import { InputNumber } from "primereact/inputnumber";
+import { Calendar } from "primereact/calendar";
+import { DURATION_OPTIONS } from "shared/utils/time-utils";
 
 const appointmentFormSchema = z.object({
   nickname: z.string().min(2, "The nickname must be at least 2 characters."),
@@ -31,12 +31,34 @@ export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing }: Bas
     <form onSubmit={handleSubmit(onSubmit)} className="h-full">
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col space-y-3">
-          <Controller name="timeBegin" control={control} render={({ field }) => <InputText {...field} placeholder="John" invalid={!!errors.timeBegin} aria-describedby="nickname-error" />} />
-          <Controller name="duration" control={control} render={({ field }) => <InputNumber {...field} placeholder="John" invalid={!!errors.duration} aria-describedby="duration-error" />} />
-          <Controller name="clientId" control={control} render={({ field }) => <Dropdown value={field.value} optionValue="id" options={[]} optionLabel="label" placeholder="Select a View" />} />
-          <Controller name="serviceId" control={control} render={({ field }) => <Dropdown value={field.value} optionValue="id" options={[]} optionLabel="label" placeholder="Select a View" />} />
-          <Controller name="expertId" control={control} render={({ field }) => <Dropdown value={field.value} optionValue="id" options={[]} optionLabel="label" placeholder="Select a View" />} />
-          <Controller name="notes" control={control} render={({ field }) => <InputTextarea {...field} placeholder="Allergy, Specifications, etc." />} />
+          <Controller
+            name="timeBegin"
+            control={control}
+            render={({ field }) => <Calendar id="calendar-24h" value={field.value} onChange={(e) => field.onChange(e.value)} showTime hourFormat="24" stepMinute={15} />}
+          />
+          <Controller
+            name="duration"
+            control={control}
+            render={({ field }) => (
+              <Dropdown value={field.value} onChange={(e) => field.onChange(e.value)} optionValue="id" options={DURATION_OPTIONS} optionLabel="label" placeholder="Select a View" />
+            )}
+          />
+          <Controller
+            name="clientId"
+            control={control}
+            render={({ field }) => <Dropdown onChange={(e) => field.onChange(e.value)} optionValue="id" options={[]} optionLabel="label" placeholder="Select a Client" />}
+          />
+          <Controller
+            name="serviceId"
+            control={control}
+            render={({ field }) => <Dropdown onChange={(e) => field.onChange(e.value)} optionValue="id" options={[]} optionLabel="label" placeholder="Select a Service" />}
+          />
+          <Controller
+            name="expertId"
+            control={control}
+            render={({ field }) => <Dropdown onChange={(e) => field.onChange(e.value)} optionValue="id" options={[]} optionLabel="label" placeholder="Select an Expert" />}
+          />
+          <Controller name="notes" control={control} render={({ field }) => <InputTextarea {...field} onChange={(e) => field.onChange(e)} placeholder="Notes: Allergy, Specifications, etc." />} />
         </div>
         <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} />
       </div>

@@ -1,6 +1,6 @@
 export interface Appointment {
   id: number;
-  timeBegin: string;
+  timeBegin: Date;
   duration: number;
   clientId: number;
   serviceId: number;
@@ -10,7 +10,7 @@ export interface Appointment {
 
 export const DEFAULT_APPOINTMENT: Appointment = {
   id: 0,
-  timeBegin: "",
+  timeBegin: new Date(),
   duration: 60,
   clientId: 0,
   serviceId: 0,

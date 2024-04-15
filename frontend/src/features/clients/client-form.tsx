@@ -2,13 +2,12 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "react-toastify";
-import { InputMask } from 'primereact/inputmask';
-import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
+import { InputMask } from "primereact/inputmask";
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
 import { FormActions } from "shared/ui/form-actions";
 import { BaseFormProps } from "shared/types/base-form-props";
 import { Client, DEFAULT_CLIENT } from "./client";
-        
 
 const clientFormSchema = z
   .object({
@@ -39,7 +38,7 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
   });
 
   const onSubmit = (form: Client) => {
-      onConfirm(form);
+    onConfirm(form);
   };
 
   return (
@@ -49,45 +48,45 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
           <Controller
             name="nickname"
             control={control}
-            render={({ field }) =>
+            render={({ field }) => (
               <>
-                <InputText {...field} placeholder="John" invalid={!!errors.nickname} aria-describedby="nickname-error" />
+                <InputText {...field} placeholder="Nickname" invalid={!!errors.nickname} aria-describedby="nickname-error" />
                 <small id="nickname-error" className="text-red-600">
-                    {errors.nickname?.message}
+                  {errors.nickname?.message}
                 </small>
               </>
-            }
+            )}
           />
           <Controller
             name="firstName"
             control={control}
-            render={({ field }) =>
+            render={({ field }) => (
               <>
-                <InputText {...field} placeholder="John" invalid={!!errors.firstName} aria-describedby="firstName-error"/>
+                <InputText {...field} placeholder="First Name" invalid={!!errors.firstName} aria-describedby="firstName-error" />
                 <small id="firstName-error" className="text-red-600">
-                    {errors.firstName?.message} 
+                  {errors.firstName?.message}
                 </small>
               </>
-            }
+            )}
           />
           <Controller
             name="lastName"
             control={control}
-            render={({ field }) =>
+            render={({ field }) => (
               <>
-                <InputText {...field} placeholder="Smith" invalid={!!errors.lastName} aria-describedby="lastName-error"/>
+                <InputText {...field} placeholder="Last Name" invalid={!!errors.lastName} aria-describedby="lastName-error" />
                 <small id="lastName-error" className="text-red-600">
-                    {errors.lastName?.message}
+                  {errors.lastName?.message}
                 </small>
               </>
-            }
+            )}
           />
           <Controller
             name="phoneNumber"
             control={control}
             render={({ field }) => (
               <>
-                <InputMask {...field} id="phone" mask="(999) 999-9999" placeholder="(999) 999-9999" aria-describedby="phoneNumber-error"/>
+                <InputMask {...field} id="phone" mask="(999) 999-9999" placeholder="(999) 999-9999" aria-describedby="phoneNumber-error" />
                 <small id="phoneNumber-error" className="text-red-600">
                   {errors.phoneNumber?.message}
                 </small>
@@ -97,18 +96,16 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
           <Controller
             name="email"
             control={control}
-            render={({ field }) =>
+            render={({ field }) => (
               <>
                 <InputText {...field} placeholder="example@example.com" invalid={!!errors.email} />
                 <small id="username-error" className="text-red-600">
-                    {errors.email?.message}
+                  {errors.email?.message}
                 </small>
               </>
-            }
+            )}
           />
-          <Controller name="notes" control={control} render={({ field }) =>
-              <InputTextarea {...field} placeholder="Allergy, Specifications, etc." />
-          } />
+          <Controller name="notes" control={control} render={({ field }) => <InputTextarea {...field} placeholder="Allergy, Specifications, etc." />} />
         </div>
         <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} />
       </div>

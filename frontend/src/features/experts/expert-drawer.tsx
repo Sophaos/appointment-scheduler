@@ -8,12 +8,11 @@ export const ExpertDrawer = () => {
   const isExpertDrawerVisible = useSelector(selectIsExpertDrawerVisible);
   const handleHide = () => dispatch(setExpertDrawerVisibility(false));
 
-  const handleCancel = () => console.log("Cancel")
-  const handleConfirm = () => console.log("Confirm")
+  const handleConfirm = () => console.log("Confirm");
   const isProcessing = false;
   return (
     <BaseDrawer isOpen={isExpertDrawerVisible} title="Expert" onHide={handleHide}>
-      <ExpertForm onCancel={handleCancel} onConfirm={handleConfirm} data={undefined} isProcessing={isProcessing} />
+      <ExpertForm onCancel={handleHide} onConfirm={handleConfirm} data={undefined} isProcessing={isProcessing} />
     </BaseDrawer>
   );
 };

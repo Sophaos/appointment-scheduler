@@ -8,13 +8,12 @@ export const ClientDrawer = () => {
   const isClientDrawerVisible = useSelector(selectIsClientDrawerVisible);
   const handleHide = () => dispatch(setClientDrawerVisibility(false));
 
-  const handleCancel = () => console.log("Cancel")
-  const handleConfirm = () => console.log("Confirm")
+  const handleConfirm = () => console.log("Confirm");
   const isProcessing = false;
 
   return (
     <BaseDrawer isOpen={isClientDrawerVisible} title="Client" onHide={handleHide} icon={"pi pi-user-plus"}>
-      <ClientForm onCancel={handleCancel} onConfirm={handleConfirm} data={undefined} isProcessing={isProcessing} />
+      <ClientForm onCancel={handleHide} onConfirm={handleConfirm} data={undefined} isProcessing={isProcessing} />
     </BaseDrawer>
   );
 };

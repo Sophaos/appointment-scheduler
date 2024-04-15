@@ -8,13 +8,12 @@ export const AppointmentDrawer = () => {
   const isAppointmentDrawerVisible = useSelector(selectIsAppointmentDrawerVisible);
   const handleHide = () => dispatch(setAppointmentDrawerVisibility(false));
 
-  const handleCancel = () => console.log("Cancel");
   const handleConfirm = () => console.log("Confirm");
   const isProcessing = false;
 
   return (
     <BaseDrawer isOpen={isAppointmentDrawerVisible} title="Appointment" onHide={handleHide}>
-      <AppointmentForm onCancel={handleCancel} onConfirm={handleConfirm} data={undefined} isProcessing={isProcessing} />
+      <AppointmentForm onCancel={handleHide} onConfirm={handleConfirm} data={undefined} isProcessing={isProcessing} />
     </BaseDrawer>
   );
 };

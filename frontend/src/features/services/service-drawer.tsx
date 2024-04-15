@@ -8,13 +8,12 @@ export const ServiceDrawer = () => {
   const isServiceDrawerVisible = useSelector(selectIsServiceDrawerVisible);
   const handleHide = () => dispatch(setServiceDrawerVisibility(false));
 
-  const handleCancel = () => console.log("Cancel")
-  const handleConfirm = () => console.log("Confirm")
+  const handleConfirm = () => console.log("Confirm");
   const isProcessing = false;
 
   return (
     <BaseDrawer isOpen={isServiceDrawerVisible} title="Service" onHide={handleHide}>
-      <ServiceForm onCancel={handleCancel} onConfirm={handleConfirm} data={undefined} isProcessing={isProcessing} />
+      <ServiceForm onCancel={handleHide} onConfirm={handleConfirm} data={undefined} isProcessing={isProcessing} />
     </BaseDrawer>
   );
 };
