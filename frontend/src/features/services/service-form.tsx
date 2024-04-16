@@ -6,8 +6,8 @@ import { BaseFormProps } from "shared/types/base-form-props";
 import { FormActions } from "shared/ui/form-actions";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
-import { whiteContrastColors } from "shared/utils/colors-utils";
 import { DURATION_OPTIONS } from "shared/utils/time-utils";
+import { ColorPicker } from "primereact/colorpicker";
 
 const serviceFormSchema = z.object({
   name: z.string().min(1, "The name must be at least 1 character."),
@@ -45,11 +45,7 @@ export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing }: BaseFor
           <small id="duration-error" className="text-red-600">
             {errors.duration?.message}
           </small>
-          <Controller
-            name="color"
-            control={control}
-            render={({ field }) => <Dropdown value={field.value} optionValue="id" options={whiteContrastColors} optionLabel="label" placeholder="Select a View" />}
-          />
+          <Controller name="color" control={control} render={({ field }) => <ColorPicker value={field.value} onChange={(e) => field.onChange(e.value)} />} />
           <small id="color-error" className="text-red-600">
             {errors.color?.message}
           </small>
