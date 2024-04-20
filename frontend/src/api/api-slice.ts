@@ -7,7 +7,8 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
     prepareHeaders: (headers) => {
-      // TODO: if any auth code goes here
+      headers.append("Accept", "application/json, text/plain, */*");
+      headers.append("Content-Type", "application/json;charset=utf-8");
       return headers;
     },
   }),

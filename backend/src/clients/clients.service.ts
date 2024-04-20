@@ -4,7 +4,6 @@ import { UpdateClientDto } from './dto/update-client.dto';
 import { Client } from './entities/client.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityManager, In, Repository } from 'typeorm';
-import { Appointment } from 'src/appointments/entities/appointment.entity';
 
 @Injectable()
 export class ClientsService {
@@ -14,14 +13,8 @@ export class ClientsService {
     private readonly entityManager: EntityManager,
   ) {}
   async create(createClientDto: CreateClientDto) {
-    const { appointmentIds, ...data } = createClientDto;
-    const appointments = await this.entityManager.findBy(Appointment, {
-      id: In(appointmentIds),
-    });
-
     const item = new Client({
-      ...data,
-      appointments,
+      ...createClientDto,
     });
 
     await this.entityManager.save(item);

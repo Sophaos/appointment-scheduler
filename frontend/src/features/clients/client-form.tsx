@@ -15,7 +15,7 @@ const clientFormSchema = z
     firstName: z.string().optional(),
     lastName: z.string().optional(),
     phoneNumber: z.string().min(1, "The phone number is required.").optional().or(z.literal("")),
-    notes: z.string().optional(),
+    note: z.string().optional(),
     email: z.string().optional(),
   })
   .partial()
@@ -105,7 +105,7 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
               </>
             )}
           />
-          <Controller name="notes" control={control} render={({ field }) => <InputTextarea {...field} placeholder="Allergy, Specifications, etc." />} />
+          <Controller name="note" control={control} render={({ field }) => <InputTextarea {...field} placeholder="Allergy, Specifications, etc." />} />
         </div>
         <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} />
       </div>

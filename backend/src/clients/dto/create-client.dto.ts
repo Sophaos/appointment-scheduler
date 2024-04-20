@@ -1,7 +1,7 @@
 export class CreateClientDto {
   nickname: string;
   phoneNumber: string;
-  rating: number;
+  firstName: string;
+  lastName: string;
   note: string;
-  appointmentIds: number[];
 }

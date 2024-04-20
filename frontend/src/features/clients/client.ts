@@ -5,7 +5,8 @@ export interface Client {
   firstName: string;
   lastName: string;
   email: string;
-  notes: string;
+  note: string;
+  // appointmentIds: number[];
 }
 
 export const DEFAULT_CLIENT: Client = {
@@ -15,5 +16,6 @@ export const DEFAULT_CLIENT: Client = {
   firstName: "",
   lastName: "",
   email: "",
-  notes: "",
+  note: "",
+  // appointmentIds: [],
 };

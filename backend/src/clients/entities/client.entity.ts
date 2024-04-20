@@ -20,9 +20,6 @@ export class Client extends AbstractEntity<Client> {
   email: string;
 
   @Column()
-  rating: number;
-
-  @Column()
   note: string;
 
   @OneToMany(() => Appointment, (appointment) => appointment.client)

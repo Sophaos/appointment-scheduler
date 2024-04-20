@@ -18,12 +18,13 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
 
         body: JSON.stringify({
-          clientId: request.id,
+          id: request.id,
           nickname: request.nickname,
-          email: request.email,
+          firstName: request.firstName,
+          lastName: request.lastName,
           phoneNumber: request.phoneNumber,
-          notes: request.notes,
-          rating: request.rating,
+          email: request.email,
+          note: request.note,
         }),
       }),
       invalidatesTags: ["Clients"],
@@ -35,10 +36,11 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
 
         body: JSON.stringify({
           nickname: request.nickname,
+          firstName: request.firstName,
+          lastName: request.lastName,
           phoneNumber: request.phoneNumber,
           email: request.email,
-          notes: request.notes,
-          rating: request.rating,
+          note: request.note,
         }),
       }),
       invalidatesTags: ["Clients"],
@@ -49,7 +51,7 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
 
         body: JSON.stringify({
-          clientId: request,
+          id: request,
         }),
       }),
       invalidatesTags: ["Clients"],
