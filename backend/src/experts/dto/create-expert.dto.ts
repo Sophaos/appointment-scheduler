@@ -1,6 +1,6 @@
 export class CreateExpertDto {
   nickname: string;
   color: string;
-  serviceIds: number[];
-  appointmentIds: number[];
+  // serviceIds: number[];
+  // appointmentIds: number[];
 }

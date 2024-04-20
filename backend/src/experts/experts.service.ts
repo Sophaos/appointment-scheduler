@@ -15,20 +15,8 @@ export class ExpertsService {
     private readonly entityManager: EntityManager,
   ) {}
   async create(createExpertDto: CreateExpertDto) {
-    const { serviceIds, appointmentIds, ...data } = createExpertDto;
-
-    const appointments = await this.entityManager.findBy(Appointment, {
-      id: In(appointmentIds),
-    });
-
-    const services = await this.entityManager.findBy(Service, {
-      id: In(serviceIds),
-    });
-
     const item = new Expert({
-      ...data,
-      services,
-      appointments,
+      ...createExpertDto,
     });
 
     await this.entityManager.save(item);

@@ -17,9 +17,9 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
         url: BASE_URL,
         method: "PATCH",
         body: JSON.stringify({
-          expertId: request.id,
+          id: request.id,
           nickname: request.nickname,
-          serviceIdList: request.serviceIdList.join(";"),
+          // serviceIdList: request.serviceIdList.join(";"),
           color: request.color,
         }),
       }),
@@ -32,7 +32,7 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
 
         body: JSON.stringify({
           nickname: request.nickname,
-          serviceIdList: request.serviceIdList.join(";"),
+          // serviceIdList: request.serviceIdList.join(";"),
           color: request.color,
         }),
       }),
@@ -43,7 +43,7 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
         url: BASE_URL,
         method: "DELETE",
         body: JSON.stringify({
-          expertId: request,
+          id: request,
         }),
       }),
       invalidatesTags: ["Experts"],

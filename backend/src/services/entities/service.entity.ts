@@ -11,6 +11,9 @@ export class Service extends AbstractEntity<Service> {
   @Column()
   color: string;
 
+  @Column()
+  duration: number;
+
   @ManyToMany(() => Expert, (expert) => expert.services)
   experts: Expert[];
 

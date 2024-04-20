@@ -15,19 +15,21 @@ export class ServicesService {
     private readonly entityManager: EntityManager,
   ) {}
   async create(createServiceDto: CreateServiceDto) {
-    const { appointmentIds, expertIds, ...data } = createServiceDto;
-    const appointments = await this.entityManager.findBy(Appointment, {
-      id: In(appointmentIds),
-    });
+    // const { appointmentIds, expertIds, ...data } = createServiceDto;
+    // console.log(createServiceDto);
+    // const appointments = await this.entityManager.findBy(Appointment, {
+    //   id: In(appointmentIds),
+    // });
 
-    const experts = await this.entityManager.findBy(Expert, {
-      id: In(expertIds),
-    });
+    // const experts = await this.entityManager.findBy(Expert, {
+    //   id: In(expertIds),
+    // });
 
     const item = new Service({
-      ...data,
-      appointments,
-      experts,
+      ...createServiceDto,
+      // ...data,
+      // appointments,
+      // experts,
     });
 
     await this.entityManager.save(item);

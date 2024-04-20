@@ -19,9 +19,10 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
 
         body: JSON.stringify({
-          serviceId: request.id,
+          id: request.id,
           name: request.name,
           color: request.color,
+          duration: request.duration,
         }),
       }),
       invalidatesTags: ["Services"],
@@ -34,6 +35,7 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
         body: JSON.stringify({
           name: request.name,
           color: request.color,
+          duration: request.duration,
         }),
       }),
       invalidatesTags: ["Services"],
@@ -44,7 +46,7 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
 
         body: JSON.stringify({
-          serviceId: request,
+          id: request,
         }),
       }),
       invalidatesTags: ["Services"],

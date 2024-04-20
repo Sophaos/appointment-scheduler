@@ -31,14 +31,14 @@ export const ClientDrawer = ({ data }: EntityDrawerProps<Client>) => {
     }
   };
 
-  const handleFormConfirm = (formData: Client) => {
+  const handleConfirm = (formData: Client) => {
     const item = { ...data, ...formData };
     item?.id ? handleUpdate(item) : handleAdd(item);
   };
 
   return (
     <BaseDrawer isOpen={isClientDrawerVisible} title="Client" onHide={handleHide} icon={"pi pi-user-plus"}>
-      <ClientForm onCancel={handleHide} onConfirm={handleFormConfirm} data={undefined} isProcessing={isCreating || isUpdating} />
+      <ClientForm onCancel={handleHide} onConfirm={handleConfirm} data={undefined} isProcessing={isCreating || isUpdating} />
     </BaseDrawer>
   );
 };
