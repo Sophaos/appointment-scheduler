@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
+import { Expert } from "./expert";
+import { EntityOption } from "shared/types/entity-option";
 
 const BASE_URL = "experts";
 export const extendedExpertApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getExperts: builder.query<any, void>({
+    getExperts: builder.query<Expert[], void>({
       query: () => ({
         url: BASE_URL,
         method: "GET",
@@ -72,3 +74,17 @@ export const { setExpertDrawerVisibility } = expertSlice.actions;
 export const { selectIsExpertDrawerVisible } = expertSlice.selectors;
 
 export const { useGetExpertsQuery, useUpdateExpertMutation, useCreateExpertMutation, useDeleteExpertMutation } = extendedExpertApiSlice;
+
+export const selectExpertsResult = extendedExpertApiSlice.endpoints.getExperts.select();
+
+export const selectExperts = createSelector(selectExpertsResult, (expertsResult) => expertsResult?.data ?? []);
+
+export const selectExpertOptions = createSelector(selectExperts, (experts) =>
+  experts?.map(
+    (c) =>
+      ({
+        id: c.id,
+        label: c.nickname,
+      } as EntityOption)
+  )
+);

@@ -1,7 +1,7 @@
 export interface Appointment {
   id: number;
-  timeBegin: Date;
-  duration: number;
+  startTime: Date;
+  endTime: Date;
   clientId: number;
   serviceId: number;
   expertId: number;
@@ -10,8 +10,8 @@ export interface Appointment {
 
 export const DEFAULT_APPOINTMENT: Appointment = {
   id: 0,
-  timeBegin: new Date(),
-  duration: 60,
+  startTime: new Date(),
+  endTime: new Date(),
   clientId: 0,
   serviceId: 0,
   expertId: 0,

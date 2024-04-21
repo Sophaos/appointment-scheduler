@@ -1,8 +1,8 @@
 export class CreateAppointmentDto {
-  title: string;
-  start: Date;
-  end: Date;
+  startTime: Date;
+  endTime: Date;
   notes: string;
   clientId: number;
+  expertId: number;
   serviceId: number;
 }

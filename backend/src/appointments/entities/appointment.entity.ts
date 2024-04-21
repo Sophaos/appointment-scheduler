@@ -6,14 +6,11 @@ import { Entity, Column, ManyToOne, JoinColumn, JoinTable } from 'typeorm';
 
 @Entity()
 export class Appointment extends AbstractEntity<Appointment> {
-  @Column()
-  title: string;
+  @Column({ type: 'timestamptz' })
+  startTime: Date;
 
   @Column({ type: 'timestamptz' })
-  start: Date;
-
-  @Column({ type: 'timestamptz' })
-  end: Date;
+  endTime: Date;
 
   @Column()
   notes: string;

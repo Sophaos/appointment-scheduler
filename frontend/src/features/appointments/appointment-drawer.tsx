@@ -33,6 +33,7 @@ export const AppointmentDrawer = ({ data }: EntityDrawerProps<Appointment>) => {
 
   const handleConfirm = (formData: Appointment) => {
     const item = { ...data, ...formData };
+    console.log(item);
     item?.id ? handleUpdate(item) : handleAdd(item);
   };
 

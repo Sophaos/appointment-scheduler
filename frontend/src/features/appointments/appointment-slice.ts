@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
+import { Appointment } from "./appointment";
 
 const BASE_URL = "appointments";
 export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAppointments: builder.query<any, void>({
+    getAppointments: builder.query<Appointment[], void>({
       query: () => ({
         url: BASE_URL,
         method: "GET",
@@ -13,45 +14,41 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Appointments"],
     }),
     updateAppointment: builder.mutation({
-      query: ({ form }) => ({
+      query: (request) => ({
         url: BASE_URL,
         method: "PATCH",
         body: JSON.stringify({
-          appointmentId: form.appointmentId,
-          scheduleDate: form.scheduleDate,
-          timeBegin: form.timeBegin,
-          clientId: form.clientId,
-          appointmentNote: form.appointmentNote,
-          timeEnd: form.timeEnd,
-          serviceIdList: form.serviceIdList,
-          serviceNameList: form.serviceNameList,
-          servicesForClient: form.servicesForClient,
+          id: request.id,
+          startTime: request.startTime,
+          endTime: request.endTime,
+          clientId: request.clientId,
+          expertId: request.expertId,
+          serviceId: request.serviceId,
+          notes: request.notes,
         }),
       }),
       invalidatesTags: ["Appointments"],
     }),
     createAppointment: builder.mutation({
-      query: ({ form }) => ({
+      query: (request) => ({
         url: BASE_URL,
         method: "POST",
         body: JSON.stringify({
-          scheduleDate: form.scheduleDate,
-          timeBegin: form.timeBegin,
-          clientId: form.clientId,
-          appointmentNote: form.appointmentNote,
-          timeEnd: form.timeEnd,
-          serviceIdList: form.serviceIdList,
-          serviceNameList: form.serviceNameList,
-          servicesForClient: form.servicesForClient,
+          startTime: request.startTime,
+          endTime: request.endTime,
+          clientId: request.clientId,
+          expertId: request.expertId,
+          serviceId: request.serviceId,
+          notes: request.notes,
         }),
       }),
       invalidatesTags: ["Appointments"],
     }),
     deleteAppointment: builder.mutation({
-      query: ({ form }) => ({
+      query: (request) => ({
         url: BASE_URL,
         method: "DELETE",
-        body: JSON.stringify({ scheduleDate: form.scheduleDate, appointmentId: form.appointmentId }),
+        body: JSON.stringify({ scheduleDate: request.scheduleDate, appointmentId: request.appointmentId }),
       }),
       invalidatesTags: ["Appointments"],
     }),

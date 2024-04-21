@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
+import { Client } from "./client";
+import { EntityOption } from "shared/types/entity-option";
 
 const BASE_URL = "clients";
 export const extendedClientApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getClients: builder.query<any, void>({
+    getClients: builder.query<Client[], void>({
       query: () => ({
         url: BASE_URL,
         method: "GET",
@@ -80,3 +82,17 @@ export const { setClientDrawerVisibility } = clientSlice.actions;
 export const { selectIsClientDrawerVisible } = clientSlice.selectors;
 
 export const { useGetClientsQuery, useUpdateClientMutation, useCreateClientMutation, useDeleteClientMutation } = extendedClientApiSlice;
+
+export const selectClientsResult = extendedClientApiSlice.endpoints.getClients.select();
+
+export const selectClients = createSelector(selectClientsResult, (clientsResult) => clientsResult?.data ?? []);
+
+export const selectClientOptions = createSelector(selectClients, (clients) =>
+  clients?.map(
+    (c) =>
+      ({
+        id: c.id,
+        label: c.nickname,
+      } as EntityOption)
+  )
+);

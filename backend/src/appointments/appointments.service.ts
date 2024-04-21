@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, EntityManager } from 'typeorm';
 import { Service } from 'src/services/entities/service.entity';
 import { Client } from 'src/clients/entities/client.entity';
+import { Expert } from 'src/experts/entities/expert.entity';
 
 @Injectable()
 export class AppointmentsService {
@@ -15,9 +16,13 @@ export class AppointmentsService {
     private readonly entityManager: EntityManager,
   ) {}
   async create(createAppointmentDto: CreateAppointmentDto) {
-    const { serviceId, clientId, ...data } = createAppointmentDto;
+    const { serviceId, clientId, expertId, ...data } = createAppointmentDto;
     const service = await this.entityManager.findOneBy(Service, {
       id: serviceId,
+    });
+
+    const expert = await this.entityManager.findOneBy(Expert, {
+      id: expertId,
     });
 
     const client = await this.entityManager.findOneBy(Client, {
@@ -28,6 +33,7 @@ export class AppointmentsService {
       ...data,
       service,
       client,
+      expert,
     });
 
     await this.entityManager.save(item);

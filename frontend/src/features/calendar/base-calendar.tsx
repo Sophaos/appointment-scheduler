@@ -11,7 +11,8 @@ import { MonthEvent } from "./month-event";
 import { AgendaEvent } from "./agenda-event";
 import { ResourceHeader } from "./resource-header";
 import { CalendarToolbar } from "./calendar-toolbar";
-import { events } from "./events";
+import { Appointment } from "features/appointments/appointment";
+// import { events } from "./events";
 // Setup the localizer by providing the moment (or globalize, or Luxon) Object
 // to the correct localizer.
 const DnDCalendar = withDragAndDrop(Calendar);
@@ -21,9 +22,10 @@ export interface BaseCalendarProps {
   onEventResize: () => void;
   onSelectSlot: () => void;
   onSelectEvent: () => void;
+  events: Appointment[];
 }
 
-export const BaseCalendar = ({ onEventResize, onSelectSlot, onSelectEvent }: BaseCalendarProps) => {
+export const BaseCalendar = ({ onEventResize, onSelectSlot, onSelectEvent, events }: BaseCalendarProps) => {
   const formats: any = useMemo(
     () => ({
       dayHeaderFormat: (date: Date, culture: Culture, localizer: DateLocalizer): string => localizer.format(date, "dddd D MMM, YYYY", culture),
@@ -62,13 +64,13 @@ export const BaseCalendar = ({ onEventResize, onSelectSlot, onSelectEvent }: Bas
 
   const min = useMemo(() => new Date(1972, 0, 1, 9, 0, 0, 0), []);
   const max = useMemo(() => new Date(1972, 0, 1, 20, 0, 0, 0), []);
-  const resources = [
-    { id: 1, nickname: "Alex" },
-    { id: 2, nickname: "John" },
-    { id: 3, nickname: "Camille" },
-    { id: 4, nickname: "Justine" },
-    { id: 5, nickname: "Vicki" },
-  ];
+  // const resources = [
+  //   { id: 1, nickname: "Alex" },
+  //   { id: 2, nickname: "John" },
+  //   { id: 3, nickname: "Camille" },
+  //   { id: 4, nickname: "Justine" },
+  //   { id: 5, nickname: "Vicki" },
+  // ];
 
   return (
     <div className="myCustomHeight">
@@ -87,10 +89,10 @@ export const BaseCalendar = ({ onEventResize, onSelectSlot, onSelectEvent }: Bas
         max={max}
         events={events}
         popup
-        resourceAccessor={(e: any) => e.serviceId}
-        resources={resources}
-        resourceIdAccessor={(e: any) => e.id}
-        resourceTitleAccessor={(e: any) => e.nickname}
+        // resourceAccessor={(e: any) => e.serviceId}
+        // resources={resources}
+        // resourceIdAccessor={(e: any) => e.id}
+        // resourceTitleAccessor={(e: any) => e.nickname}
         views={["day", "agenda", "week", "month"]}
         style={{ height: "93vh" }}
         onSelectSlot={handleSelectSlot}
