@@ -40,7 +40,13 @@ export class AppointmentsService {
   }
 
   async findAll() {
-    return this.appointmentsRepository.find();
+    return this.appointmentsRepository.find({
+      relations: {
+        client: true,
+        service: true,
+        expert: true,
+      },
+    });
   }
 
   async findOne(id: number) {

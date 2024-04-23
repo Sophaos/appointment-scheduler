@@ -1,5 +1,4 @@
 import { useGetExpertsQuery } from "features/experts/expert-slice";
-import React from "react";
 
 export const ExpertsPage = () => {
   const { data, error, isLoading } = useGetExpertsQuery();

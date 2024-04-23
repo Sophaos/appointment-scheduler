@@ -1,31 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Calendar, Culture, DateLocalizer, momentLocalizer } from "react-big-calendar";
+import { Calendar, Culture, DateLocalizer, SlotInfo, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+import withDragAndDrop, { EventInteractionArgs } from "react-big-calendar/lib/addons/dragAndDrop";
 import { useCallback, useMemo } from "react";
 import { BaseEvent } from "./base-event";
 import { MonthEvent } from "./month-event";
 import { AgendaEvent } from "./agenda-event";
 import { ResourceHeader } from "./resource-header";
 import { CalendarToolbar } from "./calendar-toolbar";
-import { Appointment } from "features/appointments/appointment";
-// import { events } from "./events";
-// Setup the localizer by providing the moment (or globalize, or Luxon) Object
-// to the correct localizer.
+import { Appointment, DEFAULT_APPOINTMENT, FormattedAppointment } from "features/appointments/appointment";
+import { useDispatch } from "react-redux";
+import { setAppointmentData, setAppointmentDrawerVisibility } from "features/appointments/appointment-slice";
+
 const DnDCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
 
 export interface BaseCalendarProps {
-  onEventResize: () => void;
-  onSelectSlot: () => void;
-  onSelectEvent: () => void;
-  events: Appointment[];
+  events: FormattedAppointment[];
+  data: Appointment[];
 }
 
-export const BaseCalendar = ({ onEventResize, onSelectSlot, onSelectEvent, events }: BaseCalendarProps) => {
+export const BaseCalendar = ({ events, data }: BaseCalendarProps) => {
+  const dispatch = useDispatch();
   const formats: any = useMemo(
     () => ({
       dayHeaderFormat: (date: Date, culture: Culture, localizer: DateLocalizer): string => localizer.format(date, "dddd D MMM, YYYY", culture),
@@ -58,9 +57,24 @@ export const BaseCalendar = ({ onEventResize, onSelectSlot, onSelectEvent, event
     []
   );
 
-  const handleEventResize = useCallback((event) => onEventResize(), [onEventResize]);
-  const handleSelectSlot = useCallback((event) => onSelectSlot(), [onSelectSlot]);
-  const handleSelectEvent = useCallback((event) => onSelectEvent(), [onSelectEvent]);
+  const handleEventResize = useCallback((event: any) => dispatch(setAppointmentDrawerVisibility(true)), [dispatch]);
+  const handleSelectSlot = useCallback(
+    (event: SlotInfo) => {
+      const { start, end } = event;
+      dispatch(setAppointmentDrawerVisibility(true));
+      dispatch(setAppointmentData({ ...DEFAULT_APPOINTMENT, startTime: start.toISOString(), endTime: end.toISOString() }));
+    },
+    [dispatch]
+  );
+
+  const handleSelectEvent = useCallback(
+    (event: any) => {
+      const selectedEvent = data.find((item) => item.id === event.id) ?? DEFAULT_APPOINTMENT;
+      dispatch(setAppointmentDrawerVisibility(true));
+      dispatch(setAppointmentData({ ...selectedEvent, startTime: selectedEvent.startTime, endTime: selectedEvent.endTime }));
+    },
+    [dispatch, data]
+  );
 
   const min = useMemo(() => new Date(1972, 0, 1, 9, 0, 0, 0), []);
   const max = useMemo(() => new Date(1972, 0, 1, 20, 0, 0, 0), []);

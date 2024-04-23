@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
-import { Appointment } from "./appointment";
+import { Appointment, DEFAULT_APPOINTMENT } from "./appointment";
 
 const BASE_URL = "appointments";
 export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
@@ -57,6 +57,7 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
 
 const initialState = {
   isAppointmentDrawerVisible: false,
+  appointmentData: DEFAULT_APPOINTMENT,
 };
 
 export const appointmentSlice = createSlice({
@@ -66,13 +67,21 @@ export const appointmentSlice = createSlice({
     setAppointmentDrawerVisibility(state, action) {
       state.isAppointmentDrawerVisible = action.payload;
     },
+    setAppointmentData(state, action) {
+      state.appointmentData = action.payload;
+    },
   },
   selectors: {
     selectIsAppointmentDrawerVisible: (state) => state.isAppointmentDrawerVisible,
+    selectAppointmentData: (state) => state.appointmentData,
   },
 });
 
-export const { setAppointmentDrawerVisibility } = appointmentSlice.actions;
-export const { selectIsAppointmentDrawerVisible } = appointmentSlice.selectors;
+export const { setAppointmentDrawerVisibility, setAppointmentData } = appointmentSlice.actions;
+export const { selectIsAppointmentDrawerVisible, selectAppointmentData } = appointmentSlice.selectors;
 
 export const { useGetAppointmentsQuery, useUpdateAppointmentMutation, useCreateAppointmentMutation, useDeleteAppointmentMutation } = extendedAppointmentApiSlice;
+
+export const selectAppointmentsResult = extendedAppointmentApiSlice.endpoints.getAppointments.select();
+
+export const selectAppointments = createSelector(selectAppointmentsResult, (appointmentsResult) => appointmentsResult?.data ?? []);
