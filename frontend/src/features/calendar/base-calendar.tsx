@@ -2,9 +2,9 @@
 
 import { Calendar, Culture, DateLocalizer, SlotInfo, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import withDragAndDrop, { EventInteractionArgs } from "react-big-calendar/lib/addons/dragAndDrop";
+import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { useCallback, useMemo } from "react";
 import { BaseEvent } from "./base-event";
 import { MonthEvent } from "./month-event";
@@ -14,6 +14,7 @@ import { CalendarToolbar } from "./calendar-toolbar";
 import { Appointment, DEFAULT_APPOINTMENT, FormattedAppointment } from "features/appointments/appointment";
 import { useDispatch } from "react-redux";
 import { setAppointmentData, setAppointmentDrawerVisibility } from "features/appointments/appointment-slice";
+import { setIsMoving } from "./calendar-slice";
 
 const DnDCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
@@ -25,6 +26,7 @@ export interface BaseCalendarProps {
 
 export const BaseCalendar = ({ events, data }: BaseCalendarProps) => {
   const dispatch = useDispatch();
+
   const formats: any = useMemo(
     () => ({
       dayHeaderFormat: (date: Date, culture: Culture, localizer: DateLocalizer): string => localizer.format(date, "dddd D MMM, YYYY", culture),
@@ -57,7 +59,97 @@ export const BaseCalendar = ({ events, data }: BaseCalendarProps) => {
     []
   );
 
-  const handleEventResize = useCallback((event: any) => dispatch(setAppointmentDrawerVisibility(true)), [dispatch]);
+  // TODO: add closed days
+  const dayPropGetter = useCallback(
+    (date: any) => ({
+      ...(moment(date).day() === 1 && {
+        style: {
+          background: "repeating-linear-gradient(60deg, #F3F1F2, #F3F1F2 4px, #EBE8E9 4px, #EBE8E9 8px)",
+          color: "transparent",
+        },
+      }),
+      ...(moment(date).day() === 6 && {
+        style: {
+          borderRight: "4px solid #3B3355",
+        },
+      }),
+    }),
+    []
+  );
+
+  // todo: modify color
+  const slotPropGetter = useCallback((date: any) => {
+    const day = moment(date).day();
+
+    if (day === 1) {
+      return {
+        ...(moment(date).day() === 1 && {
+          style: {
+            background: "repeating-linear-gradient(60deg, #F3F1F2, #F3F1F2 4px, #EBE8E9 4px, #EBE8E9 8px)",
+            color: "transparent",
+          },
+        }),
+      };
+    }
+
+    const hour = moment(date).hour();
+    const intervalStart = Math.floor(hour);
+    const backgroundColor = intervalStart % 2 === 0 ? "#F1F1FD" : "white";
+
+    return {
+      className: "slotDefault",
+      style: {
+        backgroundColor,
+        color: "black",
+      },
+    };
+  }, []);
+
+  const eventPropGetter = useCallback(
+    (event: any) => ({
+      ...(event?.status === "IN_PROGRESS" && {
+        style: {
+          borderLeft: "5px green solid",
+        },
+      }),
+      ...(event?.status === "ARRIVED" && {
+        style: {
+          borderLeft: "5px GoldenRod solid",
+        },
+      }),
+      ...(event?.status === "" && {
+        style: {
+          borderLeft: "5px gray solid",
+        },
+      }),
+      ...(event?.status === "DONE" && {
+        style: {
+          opacity: "0.5",
+        },
+      }),
+    }),
+    []
+  );
+
+  const slotGroupPropGetter = useCallback(
+    () => ({
+      style: {
+        minHeight: 35,
+      },
+    }),
+    []
+  );
+
+  const handleEventResize = useCallback(
+    (event: any) => {
+      const selectedEvent = data.find((item) => item.id === event.event.id) ?? DEFAULT_APPOINTMENT;
+      dispatch(setAppointmentDrawerVisibility(true));
+      dispatch(setAppointmentData({ ...selectedEvent, startTime: event.start.toISOString(), endTime: event.end.toISOString() }));
+      dispatch(setIsMoving(true));
+    },
+    [dispatch, data]
+  );
+
   const handleSelectSlot = useCallback(
     (event: SlotInfo) => {
       const { start, end } = event;
@@ -71,7 +163,7 @@ export const BaseCalendar = ({ events, data }: BaseCalendarProps) => {
     (event: any) => {
       const selectedEvent = data.find((item) => item.id === event.id) ?? DEFAULT_APPOINTMENT;
       dispatch(setAppointmentDrawerVisibility(true));
-      dispatch(setAppointmentData({ ...selectedEvent, startTime: selectedEvent.startTime, endTime: selectedEvent.endTime }));
+      dispatch(setAppointmentData({ ...selectedEvent }));
     },
     [dispatch, data]
   );
@@ -103,6 +195,10 @@ export const BaseCalendar = ({ events, data }: BaseCalendarProps) => {
         max={max}
         events={events}
         popup
+        dayPropGetter={dayPropGetter}
+        slotPropGetter={slotPropGetter}
+        eventPropGetter={eventPropGetter}
+        slotGroupPropGetter={slotGroupPropGetter}
         // resourceAccessor={(e: any) => e.serviceId}
         // resources={resources}
         // resourceIdAccessor={(e: any) => e.id}

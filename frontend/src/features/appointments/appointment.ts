@@ -1,10 +1,14 @@
+import { Client } from "features/clients/client";
+import { Expert } from "features/experts/expert";
+import { Service } from "features/services/service";
+
 export interface Appointment {
   id: number;
   startTime: string;
   endTime: string;
-  clientId: number;
-  serviceId: number;
-  expertId: number;
+  client?: Client;
+  service?: Service;
+  expert?: Expert;
   notes: string;
 }
 
@@ -17,8 +21,8 @@ export const DEFAULT_APPOINTMENT: Appointment = {
   id: 0,
   startTime: "",
   endTime: "",
-  clientId: 0,
-  serviceId: 0,
-  expertId: 0,
+  client: undefined,
+  service: undefined,
+  expert: undefined,
   notes: "",
 };

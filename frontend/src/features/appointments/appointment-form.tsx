@@ -8,20 +8,20 @@ import { Dropdown } from "primereact/dropdown";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Calendar } from "primereact/calendar";
 import { useSelector } from "react-redux";
-import { selectClientOptions, selectClients } from "features/clients/client-slice";
-import { selectServiceOptions } from "features/services/service-slice";
-import { selectExpertOptions } from "features/experts/expert-slice";
+import { selectClients } from "features/clients/client-slice";
+import { selectServices } from "features/services/service-slice";
+import { selectExperts } from "features/experts/expert-slice";
 
 const appointmentFormSchema = z.object({
   start: z.string().datetime(),
   end: z.string().datetime(),
-  expertId: z.number(),
-  clientId: z.number(),
-  serviceId: z.number(),
+  expert: z.number(),
+  client: z.number(),
+  service: z.number(),
   notes: z.string(),
 });
 
-export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing }: BaseFormProps<FormattedAppointment>) => {
+export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing, isEnabled }: BaseFormProps<FormattedAppointment>) => {
   const {
     handleSubmit,
     control,
@@ -32,8 +32,8 @@ export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing }: Bas
   });
 
   const clientOptions = useSelector(selectClients);
-  const serviceOptions = useSelector(selectServiceOptions);
-  const expertOptions = useSelector(selectExpertOptions);
+  const serviceOptions = useSelector(selectServices);
+  const expertOptions = useSelector(selectExperts);
 
   const onSubmit = (formData: FormattedAppointment) => {
     onConfirm(formData);
@@ -54,29 +54,29 @@ export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing }: Bas
             render={({ field }) => <Calendar id="calendar-24h" value={field.value} onChange={(e) => field.onChange(e.value)} showTime hourFormat="24" stepMinute={15} />}
           />
           <Controller
-            name="clientId"
+            name="client"
             control={control}
             render={({ field }) => (
               <Dropdown {...field} value={field.value} onChange={(e) => field.onChange(e.value)} options={clientOptions} optionLabel="nickname" placeholder="Select a Client" filter />
             )}
           />
           <Controller
-            name="serviceId"
+            name="service"
             control={control}
             render={({ field }) => (
-              <Dropdown {...field} value={field.value} onChange={(e) => field.onChange(e.value)} options={serviceOptions} optionLabel="label" optionValue="id" placeholder="Select a Service" filter />
+              <Dropdown {...field} value={field.value} onChange={(e) => field.onChange(e.value)} options={serviceOptions} optionLabel="name" placeholder="Select a Service" filter />
             )}
           />
           <Controller
-            name="expertId"
+            name="expert"
             control={control}
             render={({ field }) => (
-              <Dropdown {...field} value={field.value} onChange={(e) => field.onChange(e.value)} options={expertOptions} optionLabel="label" optionValue="id" placeholder="Select an Expert" filter />
+              <Dropdown {...field} value={field.value} onChange={(e) => field.onChange(e.value)} options={expertOptions} optionLabel="nickname" placeholder="Select an Expert" filter />
             )}
           />
           <Controller name="notes" control={control} render={({ field }) => <InputTextarea {...field} onChange={(e) => field.onChange(e)} placeholder="Notes: Allergy, Specifications, etc." />} />
         </div>
-        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} />
+        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} isEnabled={isEnabled} />
       </div>
     </form>
   );
