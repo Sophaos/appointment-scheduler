@@ -1,6 +1,13 @@
 import { BaseDrawer } from "shared/ui/base-drawer";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAppointmentData, selectIsAppointmentDrawerVisible, setAppointmentDrawerVisibility, useCreateAppointmentMutation, useUpdateAppointmentMutation } from "./appointment-slice";
+import {
+  selectAppointmentData,
+  selectIsAppointmentDrawerVisible,
+  setAppointmentDrawerVisibility,
+  useCreateAppointmentMutation,
+  useDeleteAppointmentMutation,
+  useUpdateAppointmentMutation,
+} from "./appointment-slice";
 import { AppointmentForm } from "./appointment-form";
 import { Appointment, FormattedAppointment } from "./appointment";
 import { useGetExpertsQuery } from "features/experts/expert-slice";
@@ -24,6 +31,7 @@ export const AppointmentDrawer = () => {
 
   const [create, { isLoading: isCreating }] = useCreateAppointmentMutation();
   const [update, { isLoading: isUpdating }] = useUpdateAppointmentMutation();
+  const [remove, { isLoading: isDeleting }] = useDeleteAppointmentMutation();
 
   const formattedData: FormattedAppointment = { ...data, start: new Date(data.startTime), end: new Date(data.endTime) };
   const areFetching = areExpertsFetching || areClientsFetching || areServicesFetching;
@@ -46,15 +54,27 @@ export const AppointmentDrawer = () => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      await remove(data).unwrap();
+      handleHide();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleConfirm = (formData: FormattedAppointment) => {
     const item: Appointment = { ...data, ...formData, startTime: formData.start.toISOString(), endTime: formData.end.toISOString() };
-    console.log(item);
     item?.id ? handleUpdate(item) : handleAdd(item);
   };
 
   return (
     <BaseDrawer isOpen={isAppointmentDrawerVisible} title="Appointment" onHide={handleHide}>
-      {areFetching ? <div>Loading...</div> : <AppointmentForm onCancel={handleHide} onConfirm={handleConfirm} data={formattedData} isProcessing={isCreating || isUpdating} isEnabled={isMoving} />}
+      {areFetching ? (
+        <div>Loading...</div>
+      ) : (
+        <AppointmentForm onCancel={handleHide} onConfirm={handleConfirm} data={formattedData} isProcessing={isCreating || isUpdating} isEnabled={isMoving} onDelete={handleDelete} />
+      )}
     </BaseDrawer>
   );
 };

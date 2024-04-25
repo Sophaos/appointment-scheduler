@@ -15,15 +15,15 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
     }),
     updateAppointment: builder.mutation({
       query: (request) => ({
-        url: BASE_URL,
+        url: `${BASE_URL}/${request.id}`,
         method: "PATCH",
         body: JSON.stringify({
           id: request.id,
           startTime: request.startTime,
           endTime: request.endTime,
-          clientId: request.clientId,
-          expertId: request.expertId,
-          serviceId: request.serviceId,
+          clientId: request.client.id,
+          expertId: request.expert.id,
+          serviceId: request.service.id,
           notes: request.notes,
         }),
       }),
@@ -36,9 +36,9 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
         body: JSON.stringify({
           startTime: request.startTime,
           endTime: request.endTime,
-          clientId: request.clientId,
-          expertId: request.expertId,
-          serviceId: request.serviceId,
+          clientId: request.client.id,
+          expertId: request.expert.id,
+          serviceId: request.service.id,
           notes: request.notes,
         }),
       }),
@@ -46,9 +46,9 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
     }),
     deleteAppointment: builder.mutation({
       query: (request) => ({
-        url: BASE_URL,
+        url: `${BASE_URL}/${request.id}`,
         method: "DELETE",
-        body: JSON.stringify({ scheduleDate: request.scheduleDate, appointmentId: request.appointmentId }),
+        body: JSON.stringify({ id: request.id }),
       }),
       invalidatesTags: ["Appointments"],
     }),

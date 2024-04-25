@@ -21,7 +21,7 @@ const appointmentFormSchema = z.object({
   notes: z.string(),
 });
 
-export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing, isEnabled }: BaseFormProps<FormattedAppointment>) => {
+export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing, isEnabled, onDelete }: BaseFormProps<FormattedAppointment>) => {
   const {
     handleSubmit,
     control,
@@ -76,7 +76,7 @@ export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing, isEna
           />
           <Controller name="notes" control={control} render={({ field }) => <InputTextarea {...field} onChange={(e) => field.onChange(e)} placeholder="Notes: Allergy, Specifications, etc." />} />
         </div>
-        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} isEnabled={isEnabled} />
+        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} isEnabled={isEnabled} handleDelete={onDelete} />
       </div>
     </form>
   );

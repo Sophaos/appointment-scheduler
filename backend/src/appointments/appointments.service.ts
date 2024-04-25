@@ -54,12 +54,29 @@ export class AppointmentsService {
   }
 
   async update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
-    const item = this.appointmentsRepository.findOneBy({ id });
-    // item.xys = updateServiceDto.xyz
+    const item = await this.appointmentsRepository.findOneBy({ id });
+    const { serviceId, clientId, expertId } = updateAppointmentDto;
+    const service = await this.entityManager.findOneBy(Service, {
+      id: serviceId,
+    });
+
+    const expert = await this.entityManager.findOneBy(Expert, {
+      id: expertId,
+    });
+
+    const client = await this.entityManager.findOneBy(Client, {
+      id: clientId,
+    });
+    item.client = client;
+    item.expert = expert;
+    item.service = service;
+    item.notes = updateAppointmentDto.notes;
+    item.endTime = updateAppointmentDto.endTime;
+    item.startTime = updateAppointmentDto.startTime;
     await this.entityManager.save(item);
   }
 
   async remove(id: number) {
-    this.appointmentsRepository.delete(id);
+    await this.appointmentsRepository.delete(id);
   }
 }

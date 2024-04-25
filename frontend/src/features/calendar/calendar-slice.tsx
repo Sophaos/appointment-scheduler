@@ -1,9 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Expert } from "features/experts/expert";
 
 // TODO might be a good idea to use route query params instead for some of these values
-const initialState = {
-  // scheduleDate: formatDateToString(new Date())
-  scheduleDate: "",
+
+interface CalendarState {
+  scheduleDate: string;
+  view: string;
+  resources: Expert[] | undefined;
+  isMoving: boolean;
+}
+const initialState: CalendarState = {
+  scheduleDate: new Date().toISOString(),
   view: "day",
   resources: [],
   isMoving: false,
@@ -13,13 +20,13 @@ export const calendarSlice = createSlice({
   name: "calendar",
   initialState,
   reducers: {
-    setScheduleDate(state, action) {
+    setCalendarDate(state, action) {
       state.scheduleDate = action.payload;
     },
     setView(state, action) {
       state.view = action.payload;
     },
-    setScheduleDateAndView(state, action) {
+    setCalendarDateAndView(state, action) {
       state.view = action.payload.view;
       state.scheduleDate = action.payload.scheduleDate;
     },
@@ -31,7 +38,7 @@ export const calendarSlice = createSlice({
     },
   },
   selectors: {
-    selectScheduleDate: (state) => state.scheduleDate,
+    selectCalendarDate: (state) => state.scheduleDate,
     selectView: (state) => state.view,
     selectResources: (state) => state.resources,
     selectDisplayedResources: (state) => (state.resources.length > 0 ? state.resources : undefined),
@@ -39,5 +46,5 @@ export const calendarSlice = createSlice({
   },
 });
 
-export const { setScheduleDate, setView, setScheduleDateAndView, setResources, setIsMoving } = calendarSlice.actions;
-export const { selectScheduleDate, selectView, selectResources, selectDisplayedResources, selectIsMoving } = calendarSlice.selectors;
+export const { setCalendarDate, setView, setCalendarDateAndView, setResources, setIsMoving } = calendarSlice.actions;
+export const { selectCalendarDate, selectView, selectResources, selectDisplayedResources, selectIsMoving } = calendarSlice.selectors;

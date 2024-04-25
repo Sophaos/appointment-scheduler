@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Calendar, Culture, DateLocalizer, SlotInfo, momentLocalizer } from "react-big-calendar";
+import { Calendar, Culture, DateLocalizer, NavigateAction, SlotInfo, View, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "./react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
@@ -14,7 +14,8 @@ import { CalendarToolbar } from "./calendar-toolbar";
 import { Appointment, DEFAULT_APPOINTMENT, FormattedAppointment } from "features/appointments/appointment";
 import { useDispatch } from "react-redux";
 import { setAppointmentData, setAppointmentDrawerVisibility } from "features/appointments/appointment-slice";
-import { setIsMoving } from "./calendar-slice";
+import { setCalendarDate, setCalendarDateAndView, setIsMoving } from "./calendar-slice";
+import { Expert } from "features/experts/expert";
 
 const DnDCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
@@ -22,9 +23,10 @@ const localizer = momentLocalizer(moment);
 export interface BaseCalendarProps {
   events: FormattedAppointment[];
   data: Appointment[];
+  resources?: Expert[];
 }
 
-export const BaseCalendar = ({ events, data }: BaseCalendarProps) => {
+export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => {
   const dispatch = useDispatch();
 
   const formats: any = useMemo(
@@ -41,7 +43,7 @@ export const BaseCalendar = ({ events, data }: BaseCalendarProps) => {
 
   const components = useMemo(
     () => ({
-      resourceHeader: ResourceHeader,
+      // resourceHeader: ResourceHeader,
       toolbar: CalendarToolbar,
       agenda: {
         event: AgendaEvent,
@@ -140,9 +142,17 @@ export const BaseCalendar = ({ events, data }: BaseCalendarProps) => {
     []
   );
 
+  const handleNavigate = useCallback(
+    (newDate: Date, view: View, action: NavigateAction) => {
+      if (action === "DATE") dispatch(setCalendarDateAndView({ view: "day", scheduleDate: newDate.toISOString() }));
+      else dispatch(setCalendarDate(newDate.toISOString()));
+    },
+    [dispatch]
+  );
+
   const handleEventResize = useCallback(
     (event: any) => {
-      const selectedEvent = data.find((item) => item.id === event.event.id) ?? DEFAULT_APPOINTMENT;
+      const selectedEvent = data.find((item) => item.id === event.event.id);
       dispatch(setAppointmentDrawerVisibility(true));
       dispatch(setAppointmentData({ ...selectedEvent, startTime: event.start.toISOString(), endTime: event.end.toISOString() }));
       dispatch(setIsMoving(true));
@@ -150,13 +160,27 @@ export const BaseCalendar = ({ events, data }: BaseCalendarProps) => {
     [dispatch, data]
   );
 
+  const handleEventDrop = useCallback(
+    (e: any) => {
+      const { start, end, event, resourceId } = e;
+      const selectedEvent = data.find((item) => item.id === event.id);
+      const resource = resources?.find((item) => item.id === resourceId);
+      dispatch(setAppointmentDrawerVisibility(true));
+      dispatch(setAppointmentData({ ...selectedEvent, startTime: start.toISOString(), endTime: end.toISOString(), expert: resource ?? selectedEvent?.expert }));
+      dispatch(setIsMoving(true));
+    },
+    [data, resources, dispatch]
+  );
+
   const handleSelectSlot = useCallback(
     (event: SlotInfo) => {
-      const { start, end } = event;
+      const { start, end, resourceId } = event;
+      console.log(event);
+      const resource = resources?.find((item) => item.id === resourceId) ?? undefined;
       dispatch(setAppointmentDrawerVisibility(true));
-      dispatch(setAppointmentData({ ...DEFAULT_APPOINTMENT, startTime: start.toISOString(), endTime: end.toISOString() }));
+      dispatch(setAppointmentData({ ...DEFAULT_APPOINTMENT, startTime: start.toISOString(), endTime: end.toISOString(), expert: resource }));
     },
-    [dispatch]
+    [dispatch, resources]
   );
 
   const handleSelectEvent = useCallback(
@@ -170,13 +194,6 @@ export const BaseCalendar = ({ events, data }: BaseCalendarProps) => {
 
   const min = useMemo(() => new Date(1972, 0, 1, 9, 0, 0, 0), []);
   const max = useMemo(() => new Date(1972, 0, 1, 20, 0, 0, 0), []);
-  // const resources = [
-  //   { id: 1, nickname: "Alex" },
-  //   { id: 2, nickname: "John" },
-  //   { id: 3, nickname: "Camille" },
-  //   { id: 4, nickname: "Justine" },
-  //   { id: 5, nickname: "Vicki" },
-  // ];
 
   return (
     <div className="myCustomHeight">
@@ -199,15 +216,16 @@ export const BaseCalendar = ({ events, data }: BaseCalendarProps) => {
         slotPropGetter={slotPropGetter}
         eventPropGetter={eventPropGetter}
         slotGroupPropGetter={slotGroupPropGetter}
-        // resourceAccessor={(e: any) => e.serviceId}
-        // resources={resources}
-        // resourceIdAccessor={(e: any) => e.id}
-        // resourceTitleAccessor={(e: any) => e.nickname}
+        resourceAccessor={(e: any) => e?.expert?.id}
+        resources={resources}
+        resourceIdAccessor={(e: any) => e?.id}
+        resourceTitleAccessor={(e: any) => e?.nickname}
+        onNavigate={handleNavigate}
         views={["day", "agenda", "week", "month"]}
         style={{ height: "93vh" }}
         onSelectSlot={handleSelectSlot}
         onEventResize={handleEventResize}
-        onEventDrop={handleEventResize}
+        onEventDrop={handleEventDrop}
         onSelectEvent={handleSelectEvent}
       />
     </div>
