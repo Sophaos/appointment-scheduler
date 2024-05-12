@@ -160,7 +160,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-today {
-    background-color: #E83F6F;
+    background-color: #7d99bc;
 }
 
 .rbc-toolbar {
@@ -312,7 +312,7 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-event.rbc-selected,
 .rbc-day-slot .rbc-selected.rbc-background-event {
-    background-color: #5D5D81;
+    background-color: #425a78;
     color: white;
 }
 
@@ -445,7 +445,7 @@ button.rbc-input::-moz-focus-inner {
     min-width: 0;
     padding-right: 5px;
     text-align: right;
-    color:#3B3355;
+    color:black;
 }
 
 .rbc-date-cell.rbc-now {
@@ -525,7 +525,7 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-agenda-view table.rbc-agenda-table {
     width: 100%;
-    border: 3px solid #5D5D81;
+    border: 3px solid black;
     border-spacing: 0;
     border-collapse: collapse;
 }
@@ -542,7 +542,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-agenda-view table.rbc-agenda-table tbody>tr>td+td {
-    border-left: 3px solid #3B3355;
+    border-left: 3px solid black;
 }
 
 /* Apply alternating background colors to even and odd rows */
@@ -558,18 +558,18 @@ button.rbc-input::-moz-focus-inner {
 
 .rbc-rtl .rbc-agenda-view table.rbc-agenda-table tbody>tr>td+td {
     border-left-width: 0;
-    border-right: 2px solid #5D5D81;
+    border-right: 2px solid black;
 }
 
 .rbc-agenda-view table.rbc-agenda-table tbody>tr+tr {
-    border-top: 2px solid #5D5D81;
+    border-top: 2px solid black;
 }
 
 .rbc-agenda-view table.rbc-agenda-table thead>tr>th {
     padding: 3px 5px;
     text-align: left;
-    border-bottom: 2px solid #5D5D81;
-    background-color: #5D5D81;
+    border-bottom: 2px solid black;
+    background-color: #425a78; 
     color: white;
 }
 
@@ -622,7 +622,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-timeslot-group {
-    border-bottom: 1px solid #7E7F9A;
+    border-bottom: 1px solid #7e8d9f;
     min-height: 40px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -772,11 +772,11 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-timeslot-group:nth-child(2n) {
-    border-bottom: 1px dashed #3B3355;
+    border-bottom: 1px dashed black;
 }
 
 .rbc-timeslot-group:nth-child(4n) {
-    border-bottom: 2px solid #3B3355;
+    border-bottom: 2px solid black;
 }
 
 .rbc-time-slot.rbc-now {
@@ -934,7 +934,7 @@ button.rbc-input::-moz-focus-inner {
 }
 
 .rbc-time-content>*+*>* {
-    border-left: 2px solid #3B3355;
+    border-left: 2px solid black;
 }
 
 .rbc-rtl .rbc-time-content>*+*>* {
@@ -956,12 +956,12 @@ button.rbc-input::-moz-focus-inner {
     left: 0;
     right: 0;
     height: 3px;
-    background-color: #A63232;
+    background-color: #3e293c;
     pointer-events: none;
 }
 
 .rbc-row.rbc-time-header-cell {
-    background-color: #5D5D81;
+    background-color: #425a78;
     color: white;
 }
 

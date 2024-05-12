@@ -43,7 +43,7 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
 
   const components = useMemo(
     () => ({
-      // resourceHeader: ResourceHeader,
+      resourceHeader: ResourceHeader,
       toolbar: CalendarToolbar,
       agenda: {
         event: AgendaEvent,
@@ -70,11 +70,6 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
           color: "transparent",
         },
       }),
-      ...(moment(date).day() === 6 && {
-        style: {
-          borderRight: "4px solid #3B3355",
-        },
-      }),
     }),
     []
   );
@@ -96,7 +91,7 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
 
     const hour = moment(date).hour();
     const intervalStart = Math.floor(hour);
-    const backgroundColor = intervalStart % 2 === 0 ? "#F1F1FD" : "white";
+    const backgroundColor = intervalStart % 2 === 0 ? "#d5dbe9" : "white";
 
     return {
       className: "slotDefault",
@@ -109,26 +104,9 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
 
   const eventPropGetter = useCallback(
     (event: any) => ({
-      ...(event?.status === "IN_PROGRESS" && {
-        style: {
-          borderLeft: "5px green solid",
-        },
-      }),
-      ...(event?.status === "ARRIVED" && {
-        style: {
-          borderLeft: "5px GoldenRod solid",
-        },
-      }),
-      ...(event?.status === "" && {
-        style: {
-          borderLeft: "5px gray solid",
-        },
-      }),
-      ...(event?.status === "DONE" && {
-        style: {
-          opacity: "0.5",
-        },
-      }),
+      style: {
+        borderLeft: `10px #${event.service?.color} solid`,
+      },
     }),
     []
   );
