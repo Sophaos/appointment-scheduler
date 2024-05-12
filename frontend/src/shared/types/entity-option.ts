@@ -1,4 +1,4 @@
 export interface EntityOption {
   label: string;
-  id: number;
+  id: number | string;
 }

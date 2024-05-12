@@ -104,9 +104,31 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
 
   const eventPropGetter = useCallback(
     (event: any) => ({
-      style: {
-        borderLeft: `10px #${event.service?.color} solid`,
-      },
+      ...(event?.status === "IN_PROGRESS" && {
+        style: {
+          borderLeft: "6px green solid",
+        },
+      }),
+      ...(event?.status === "ARRIVED" && {
+        style: {
+          borderLeft: "6px GoldenRod solid",
+        },
+      }),
+      ...(event?.status === "" && {
+        style: {
+          borderLeft: "6px gray solid",
+        },
+      }),
+      ...(event?.status === "NO_SHOW" && {
+        style: {
+          borderLeft: "6px red solid",
+        },
+      }),
+      ...(event?.status === "DONE" && {
+        style: {
+          opacity: "0.5",
+        },
+      }),
     }),
     []
   );
@@ -114,7 +136,7 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
   const slotGroupPropGetter = useCallback(
     () => ({
       style: {
-        minHeight: 35,
+        minHeight: 40,
       },
     }),
     []

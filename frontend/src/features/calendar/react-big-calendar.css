@@ -764,11 +764,6 @@ button.rbc-input::-moz-focus-inner {
     -webkit-box-flex: 1;
     -ms-flex: 1 0 0px;
     flex: 1 0 0;
-    /* TODO */
-}
-
-.rbc-timeslot-group:nth-child(4n + 1) {
-    font-weight: bold;
 }
 
 .rbc-timeslot-group:nth-child(2n) {

@@ -5,4 +5,5 @@ export class CreateAppointmentDto {
   clientId: number;
   expertId: number;
   serviceId: number;
+  status: string;
 }

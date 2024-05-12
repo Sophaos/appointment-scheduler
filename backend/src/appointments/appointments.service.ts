@@ -73,6 +73,7 @@ export class AppointmentsService {
     item.notes = updateAppointmentDto.notes;
     item.endTime = updateAppointmentDto.endTime;
     item.startTime = updateAppointmentDto.startTime;
+    item.status = updateAppointmentDto.status;
     await this.entityManager.save(item);
   }
 

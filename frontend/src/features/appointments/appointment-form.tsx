@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { selectClients } from "features/clients/client-slice";
 import { selectServices } from "features/services/service-slice";
 import { selectExperts } from "features/experts/expert-slice";
+import { SelectButton } from "primereact/selectbutton";
+import { EntityOption } from "shared/types/entity-option";
 
 const appointmentFormSchema = z.object({
   start: z.string().datetime(),
@@ -20,6 +22,14 @@ const appointmentFormSchema = z.object({
   service: z.number(),
   notes: z.string(),
 });
+
+const STATUS_OPTIONS: EntityOption[] = [
+  { id: "IDLE", label: "Idle" },
+  { id: "ARRIVED", label: "Arrived" },
+  { id: "IN_PROGRESS", label: "In Progress" },
+  { id: "DONE", label: "Done" },
+  { id: "NO_SHOW", label: "No-show" },
+];
 
 export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing, isEnabled, onDelete }: BaseFormProps<FormattedAppointment>) => {
   const {
@@ -74,7 +84,16 @@ export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing, isEna
               <Dropdown {...field} value={field.value} onChange={(e) => field.onChange(e.value)} options={expertOptions} optionLabel="nickname" placeholder="Select an Expert" filter />
             )}
           />
-          <Controller name="notes" control={control} render={({ field }) => <InputTextarea {...field} onChange={(e) => field.onChange(e)} placeholder="Notes: Allergy, Specifications, etc." />} />
+          <Controller
+            name="notes"
+            control={control}
+            render={({ field }) => <InputTextarea {...field} value={field.value} onChange={(e) => field.onChange(e)} placeholder="Notes: Allergy, Specifications, etc." />}
+          />
+          <Controller
+            name="status"
+            control={control}
+            render={({ field }) => <SelectButton {...field} value={field.value} onChange={(e) => field.onChange(e)} options={STATUS_OPTIONS} optionValue="id" optionLabel="label" />}
+          />
         </div>
         <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} isEnabled={isEnabled} handleDelete={onDelete} />
       </div>

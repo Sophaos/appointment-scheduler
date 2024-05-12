@@ -10,6 +10,7 @@ export interface Appointment {
   service?: Service;
   expert?: Expert;
   notes: string;
+  status: string;
 }
 
 export interface FormattedAppointment extends Appointment {
@@ -25,4 +26,5 @@ export const DEFAULT_APPOINTMENT: Appointment = {
   service: undefined,
   expert: undefined,
   notes: "",
+  status: "IDLE",
 };

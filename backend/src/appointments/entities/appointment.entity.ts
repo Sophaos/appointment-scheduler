@@ -15,6 +15,9 @@ export class Appointment extends AbstractEntity<Appointment> {
   @Column()
   notes: string;
 
+  @Column()
+  status: string;
+
   @ManyToOne(() => Client, (client) => client.appointments)
   @JoinColumn()
   client: Client;
