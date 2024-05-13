@@ -9,6 +9,7 @@ import { useGetExpertsQuery } from "features/experts/expert-slice";
 import { ServiceDrawer } from "features/services/service-drawer";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
+import { getEndtime } from "shared/utils/time-utils";
 
 export const AppointmentsPage = () => {
   const { data: appointmentsData, error, isLoading } = useGetAppointmentsQuery();
@@ -20,10 +21,12 @@ export const AppointmentsPage = () => {
       appointmentsData?.map((a) => ({
         ...a,
         start: new Date(a.startTime),
-        end: new Date(a.endTime),
+        end: getEndtime(a.startTime, a.duration),
       })) ?? [],
     [appointmentsData]
   );
+
+  console.log(formatedAppointments);
 
   return (
     <>

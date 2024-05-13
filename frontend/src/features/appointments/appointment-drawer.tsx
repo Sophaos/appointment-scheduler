@@ -33,7 +33,7 @@ export const AppointmentDrawer = () => {
   const [update, { isLoading: isUpdating }] = useUpdateAppointmentMutation();
   const [remove, { isLoading: isDeleting }] = useDeleteAppointmentMutation();
 
-  const formattedData: FormattedAppointment = { ...data, start: new Date(data.startTime), end: new Date(data.endTime) };
+  const formattedData: FormattedAppointment = { ...data, start: new Date(data.startTime) };
   const areFetching = areExpertsFetching || areClientsFetching || areServicesFetching;
 
   const handleUpdate = async (item: Appointment) => {
@@ -64,7 +64,7 @@ export const AppointmentDrawer = () => {
   };
 
   const handleConfirm = (formData: FormattedAppointment) => {
-    const item: Appointment = { ...data, ...formData, startTime: formData.start.toISOString(), endTime: formData.end.toISOString() };
+    const item: Appointment = { ...data, ...formData, startTime: formData.start.toISOString() };
     item?.id ? handleUpdate(item) : handleAdd(item);
   };
 

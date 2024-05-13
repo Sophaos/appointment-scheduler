@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { setAppointmentData, setAppointmentDrawerVisibility } from "features/appointments/appointment-slice";
 import { setCalendarDate, setCalendarDateAndView, setIsMoving } from "./calendar-slice";
 import { Expert } from "features/experts/expert";
+import { getMinutesDifferences } from "shared/utils/time-utils";
 
 const DnDCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
@@ -154,7 +155,7 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
     (event: any) => {
       const selectedEvent = data.find((item) => item.id === event.event.id);
       dispatch(setAppointmentDrawerVisibility(true));
-      dispatch(setAppointmentData({ ...selectedEvent, startTime: event.start.toISOString(), endTime: event.end.toISOString() }));
+      dispatch(setAppointmentData({ ...selectedEvent, startTime: event.start.toISOString(), duration: getMinutesDifferences(event.start, event.end) }));
       dispatch(setIsMoving(true));
     },
     [dispatch, data]
@@ -166,7 +167,7 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
       const selectedEvent = data.find((item) => item.id === event.id);
       const resource = resources?.find((item) => item.id === resourceId);
       dispatch(setAppointmentDrawerVisibility(true));
-      dispatch(setAppointmentData({ ...selectedEvent, startTime: start.toISOString(), endTime: end.toISOString(), expert: resource ?? selectedEvent?.expert }));
+      dispatch(setAppointmentData({ ...selectedEvent, startTime: start.toISOString(), duration: getMinutesDifferences(start, end), expert: resource ?? selectedEvent?.expert }));
       dispatch(setIsMoving(true));
     },
     [data, resources, dispatch]
@@ -175,10 +176,9 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
   const handleSelectSlot = useCallback(
     (event: SlotInfo) => {
       const { start, end, resourceId } = event;
-      console.log(event);
       const resource = resources?.find((item) => item.id === resourceId) ?? undefined;
       dispatch(setAppointmentDrawerVisibility(true));
-      dispatch(setAppointmentData({ ...DEFAULT_APPOINTMENT, startTime: start.toISOString(), endTime: end.toISOString(), expert: resource }));
+      dispatch(setAppointmentData({ ...DEFAULT_APPOINTMENT, startTime: start.toISOString(), duration: getMinutesDifferences(start, end), expert: resource }));
     },
     [dispatch, resources]
   );

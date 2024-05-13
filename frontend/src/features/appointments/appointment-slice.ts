@@ -20,7 +20,7 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
         body: JSON.stringify({
           id: request.id,
           startTime: request.startTime,
-          endTime: request.endTime,
+          duration: request.duration,
           clientId: request.client.id,
           expertId: request.expert.id,
           serviceId: request.service.id,
@@ -36,7 +36,7 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: JSON.stringify({
           startTime: request.startTime,
-          endTime: request.endTime,
+          duration: request.duration,
           clientId: request.client.id,
           expertId: request.expert.id,
           serviceId: request.service.id,

@@ -9,11 +9,11 @@ export class Appointment extends AbstractEntity<Appointment> {
   @Column({ type: 'timestamptz' })
   startTime: Date;
 
-  @Column({ type: 'timestamptz' })
-  endTime: Date;
-
   @Column()
   notes: string;
+
+  @Column()
+  duration: number;
 
   @Column()
   status: string;

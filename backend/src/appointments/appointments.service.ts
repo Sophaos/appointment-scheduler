@@ -70,8 +70,8 @@ export class AppointmentsService {
     item.client = client;
     item.expert = expert;
     item.service = service;
+    item.duration = updateAppointmentDto.duration;
     item.notes = updateAppointmentDto.notes;
-    item.endTime = updateAppointmentDto.endTime;
     item.startTime = updateAppointmentDto.startTime;
     item.status = updateAppointmentDto.status;
     await this.entityManager.save(item);
