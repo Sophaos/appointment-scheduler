@@ -26,8 +26,6 @@ export const AppointmentsPage = () => {
     [appointmentsData]
   );
 
-  console.log(formatedAppointments);
-
   return (
     <>
       <BaseCalendar data={appointmentsData ?? []} events={formatedAppointments} resources={displayedResources} />

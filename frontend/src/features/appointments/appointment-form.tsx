@@ -35,6 +35,8 @@ export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing, isEna
   const {
     handleSubmit,
     control,
+    setValue,
+    trigger,
     formState: { errors, isDirty },
   } = useForm({
     // resolver: zodResolver(appointmentFormSchema),
@@ -97,7 +99,19 @@ export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing, isEna
                 <label htmlFor="service" className="text-sm font-medium">
                   Service
                 </label>
-                <Dropdown {...field} value={field.value} onChange={(e) => field.onChange(e.value)} options={serviceOptions} optionLabel="name" filter />
+                <Dropdown
+                  {...field}
+                  value={field.value}
+                  onChange={(e) => {
+                    field.onChange(e.value);
+                    setValue("duration", e.value.duration);
+                    console.log(e.value);
+                    trigger("duration");
+                  }}
+                  options={serviceOptions}
+                  optionLabel="name"
+                  filter
+                />
               </div>
             )}
           />

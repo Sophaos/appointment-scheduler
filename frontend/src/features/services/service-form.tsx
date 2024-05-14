@@ -5,9 +5,8 @@ import { DEFAULT_SERVICE, Service } from "./service";
 import { BaseFormProps } from "shared/types/base-form-props";
 import { FormActions } from "shared/ui/form-actions";
 import { InputText } from "primereact/inputtext";
-import { Dropdown } from "primereact/dropdown";
-import { DURATION_OPTIONS } from "shared/utils/time-utils";
 import { ColorPicker } from "primereact/colorpicker";
+import { InputNumber } from "primereact/inputnumber";
 
 const serviceFormSchema = z.object({
   name: z.string().min(1, "The name must be at least 1 character."),
@@ -40,7 +39,9 @@ export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing }: BaseFor
           <Controller
             name="duration"
             control={control}
-            render={({ field }) => <Dropdown value={field.value} optionValue="id" options={DURATION_OPTIONS} optionLabel="label" placeholder="Select a View" />}
+            render={({ field }) => (
+              <InputNumber inputId="duration" value={field.value} onValueChange={(e) => field.onChange(e.value)} showButtons buttonLayout="horizontal" step={15} min={30} suffix=" minutes" />
+            )}
           />
           <small id="duration-error" className="text-red-600">
             {errors.duration?.message}

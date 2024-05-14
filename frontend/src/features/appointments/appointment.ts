@@ -19,7 +19,7 @@ export interface FormattedAppointment extends Appointment {
 
 export const DEFAULT_APPOINTMENT: Appointment = {
   id: 0,
-  startTime: "",
+  startTime: new Date(new Date().setHours(10, 0, 0, 0)).toString(),
   duration: 30,
   client: undefined,
   service: undefined,

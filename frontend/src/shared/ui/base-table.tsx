@@ -1,0 +1,38 @@
+// import { Column } from 'primereact/column';
+// import { DataTable } from 'primereact/datatable';
+// import React from 'react'
+
+// export interface TableColumnProp {
+//     field: string,
+//     header: string,
+// }
+
+// export interface BaseTableProps<T> {
+//   onEdit: (data: T) => void;
+//   onDelete: (data: T) => void;
+//   columns?: TableColumnProp[];
+//   data: T[];
+// }
+
+// export const BaseTable = ({ onEdit, onDelete, columns, data }: BaseTableProps<T>) => {
+//   const actionBodyTemplate = (rowData: any) => {
+//     return (
+//       <React.Fragment>
+//         <Button icon="pi pi-pencil" rounded outlined className="mr-2" onClick={() => console.log(rowData)} />
+//         <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => console.log(rowData)} />
+//       </React.Fragment>
+//     );
+//   };
+//   return (
+//     <div className="card">
+//       <DataTable value={data} showGridlines stripedRows tableStyle={{ minWidth: "50rem" }}>
+//         <Column field="nickname" header="Nickname"></Column>
+//         <Column field="phoneNumber" header="Phone Number"></Column>
+//         <Column field="firstName" header="firstName"></Column>
+//         <Column field="lastName" header="lastName"></Column>
+//         <Column field="note" header="Note"></Column>
+//         <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: "12rem" }}></Column>
+//       </DataTable>
+//     </div>
+//   );
+// };

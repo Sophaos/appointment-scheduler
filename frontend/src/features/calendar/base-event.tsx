@@ -11,13 +11,13 @@ export const BaseEvent = ({ event }: BaseEventProps) => {
   const { client, expert, service } = event;
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex flex-row flex-wrap space-x-2">
+      <div className="flex flex-row flex-wrap gap-1">
         <Tag value={client?.phoneNumber} />
         <Tag severity="info" value={client?.nickname} rounded className="p-overlay-badge">
           {client?.note && <Badge severity="danger"></Badge>}
         </Tag>
       </div>
-      <div className="flex flex-row flex-wrap space-x-2">
+      <div className="flex flex-row flex-wrap gap-1">
         <Tag style={{ background: `#${service?.color}`, color: "black" }} value={service?.name} />
         <Tag style={{ background: `#${expert?.color}` }} value={expert?.nickname} rounded />
       </div>
