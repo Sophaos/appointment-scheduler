@@ -38,7 +38,7 @@ export const ExpertDrawer = ({ data }: EntityDrawerProps<Expert>) => {
 
   return (
     <BaseDrawer isOpen={isExpertDrawerVisible} title="Expert" onHide={handleHide}>
-      <ExpertForm onCancel={handleHide} onConfirm={handleConfirm} data={undefined} isProcessing={isCreating || isUpdating} />
+      <ExpertForm onCancel={handleHide} onConfirm={handleConfirm} data={data} isProcessing={isCreating || isUpdating} />
     </BaseDrawer>
   );
 };

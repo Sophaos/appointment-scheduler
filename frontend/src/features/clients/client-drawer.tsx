@@ -38,7 +38,7 @@ export const ClientDrawer = ({ data }: EntityDrawerProps<Client>) => {
 
   return (
     <BaseDrawer isOpen={isClientDrawerVisible} title="Client" onHide={handleHide} icon={"pi pi-user-plus"}>
-      <ClientForm onCancel={handleHide} onConfirm={handleConfirm} data={undefined} isProcessing={isCreating || isUpdating} />
+      <ClientForm onCancel={handleHide} onConfirm={handleConfirm} data={data} isProcessing={isCreating || isUpdating} />
     </BaseDrawer>
   );
 };

@@ -38,7 +38,7 @@ export const ServiceDrawer = ({ data }: EntityDrawerProps<Service>) => {
 
   return (
     <BaseDrawer isOpen={isServiceDrawerVisible} title="Service" onHide={handleHide}>
-      <ServiceForm onCancel={handleHide} onConfirm={handleConfirm} data={undefined} isProcessing={isCreating || isUpdating} />
+      <ServiceForm onCancel={handleHide} onConfirm={handleConfirm} data={data} isProcessing={isCreating || isUpdating} />
     </BaseDrawer>
   );
 };

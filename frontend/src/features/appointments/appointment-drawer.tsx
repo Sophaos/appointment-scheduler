@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectAppointmentData,
   selectIsAppointmentDrawerVisible,
+  setAppointmentData,
   setAppointmentDrawerVisibility,
   useCreateAppointmentMutation,
   useDeleteAppointmentMutation,
   useUpdateAppointmentMutation,
 } from "./appointment-slice";
 import { AppointmentForm } from "./appointment-form";
-import { Appointment, FormattedAppointment } from "./appointment";
+import { Appointment, DEFAULT_APPOINTMENT, FormattedAppointment } from "./appointment";
 import { useGetExpertsQuery } from "features/experts/expert-slice";
 import { useGetServicesQuery } from "features/services/service-slice";
 import { useGetClientsQuery } from "features/clients/client-slice";
@@ -24,6 +25,7 @@ export const AppointmentDrawer = () => {
   const handleHide = () => {
     dispatch(setAppointmentDrawerVisibility(false));
     dispatch(setIsMoving(false));
+    dispatch(setAppointmentData(DEFAULT_APPOINTMENT));
   };
   const { isFetching: areExpertsFetching } = useGetExpertsQuery(undefined, { skip: !isAppointmentDrawerVisible });
   const { isFetching: areServicesFetching } = useGetServicesQuery(undefined, { skip: !isAppointmentDrawerVisible });
@@ -66,6 +68,7 @@ export const AppointmentDrawer = () => {
   const handleConfirm = (formData: FormattedAppointment) => {
     const item: Appointment = { ...data, ...formData, startTime: formData.start.toISOString() };
     item?.id ? handleUpdate(item) : handleAdd(item);
+    dispatch(setAppointmentData(DEFAULT_APPOINTMENT));
   };
 
   return (
