@@ -21,7 +21,7 @@ export class ClientsService {
   }
 
   async findAll() {
-    return this.clientRepository.find();
+    return this.clientRepository.find({ relations: ['appointments'] });
   }
 
   async findOne(id: number) {

@@ -2,7 +2,7 @@ import { Client } from 'src/clients/entities/client.entity';
 import { AbstractEntity } from 'src/database/abstract.entity';
 import { Expert } from 'src/experts/entities/expert.entity';
 import { Service } from 'src/services/entities/service.entity';
-import { Entity, Column, ManyToOne, JoinColumn, JoinTable } from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Appointment extends AbstractEntity<Appointment> {
@@ -18,15 +18,18 @@ export class Appointment extends AbstractEntity<Appointment> {
   @Column()
   status: string;
 
-  @ManyToOne(() => Client, (client) => client.appointments)
-  @JoinColumn()
+  @ManyToOne(() => Client, (client) => client.appointments, {
+    onDelete: 'CASCADE',
+  })
   client: Client;
 
-  @ManyToOne(() => Service, (service) => service.appointments)
-  @JoinTable()
+  @ManyToOne(() => Service, (service) => service.appointments, {
+    onDelete: 'CASCADE',
+  })
   service: Service;
 
-  @ManyToOne(() => Expert, (expert) => expert.appointments)
-  @JoinTable()
+  @ManyToOne(() => Expert, (expert) => expert.appointments, {
+    onDelete: 'CASCADE',
+  })
   expert: Expert;
 }
