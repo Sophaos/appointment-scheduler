@@ -3,7 +3,7 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { Client } from './entities/client.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EntityManager, In, Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 
 @Injectable()
 export class ClientsService {
@@ -29,7 +29,13 @@ export class ClientsService {
   }
 
   async update(id: number, updateClientDto: UpdateClientDto) {
-    const item = this.clientRepository.findOneBy({ id });
+    const item = await this.clientRepository.findOneBy({ id });
+    item.firstName = updateClientDto.firstName;
+    item.lastName = updateClientDto.lastName;
+    item.nickname = updateClientDto.nickname;
+    item.phoneNumber = updateClientDto.phoneNumber;
+    item.note = updateClientDto.note;
+
     await this.entityManager.save(item);
   }
 

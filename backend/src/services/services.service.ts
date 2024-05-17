@@ -3,9 +3,7 @@ import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Service } from './entities/service.entity';
-import { EntityManager, In, Repository } from 'typeorm';
-import { Appointment } from 'src/appointments/entities/appointment.entity';
-import { Expert } from 'src/experts/entities/expert.entity';
+import { EntityManager, Repository } from 'typeorm';
 
 @Injectable()
 export class ServicesService {
@@ -15,21 +13,8 @@ export class ServicesService {
     private readonly entityManager: EntityManager,
   ) {}
   async create(createServiceDto: CreateServiceDto) {
-    // const { appointmentIds, expertIds, ...data } = createServiceDto;
-    // console.log(createServiceDto);
-    // const appointments = await this.entityManager.findBy(Appointment, {
-    //   id: In(appointmentIds),
-    // });
-
-    // const experts = await this.entityManager.findBy(Expert, {
-    //   id: In(expertIds),
-    // });
-
     const item = new Service({
       ...createServiceDto,
-      // ...data,
-      // appointments,
-      // experts,
     });
 
     await this.entityManager.save(item);
@@ -44,8 +29,10 @@ export class ServicesService {
   }
 
   async update(id: number, updateServiceDto: UpdateServiceDto) {
-    const item = this.servicesRepository.findOneBy({ id });
-    // item.xys = updateServiceDto.xyz
+    const item = await this.servicesRepository.findOneBy({ id });
+    item.name = updateServiceDto.name;
+    item.color = updateServiceDto.color;
+    item.duration = updateServiceDto.duration;
     await this.entityManager.save(item);
   }
 

@@ -12,7 +12,7 @@ const expertFormSchema = z.object({
   color: z.string().min(1, "A color must be selected."),
 });
 
-export const ExpertForm = ({ onCancel, onConfirm, data, isProcessing }: BaseFormProps<Expert>) => {
+export const ExpertForm = ({ onCancel, onConfirm, data, isProcessing, onDelete }: BaseFormProps<Expert>) => {
   const {
     handleSubmit,
     control,
@@ -39,7 +39,7 @@ export const ExpertForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
             {errors.color?.message}
           </small>
         </div>
-        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} />
+        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} handleDelete={onDelete} />
       </div>
     </form>
   );

@@ -35,6 +35,8 @@ export const AppointmentDrawer = () => {
   const [update, { isLoading: isUpdating }] = useUpdateAppointmentMutation();
   const [remove, { isLoading: isDeleting }] = useDeleteAppointmentMutation();
 
+  const isProcessing = isCreating || isUpdating || isDeleting;
+
   const formattedData: FormattedAppointment = { ...data, start: new Date(data.startTime) };
   const areFetching = areExpertsFetching || areClientsFetching || areServicesFetching;
 
@@ -76,7 +78,7 @@ export const AppointmentDrawer = () => {
       {areFetching ? (
         <div>Loading...</div>
       ) : (
-        <AppointmentForm onCancel={handleHide} onConfirm={handleConfirm} data={formattedData} isProcessing={isCreating || isUpdating} isEnabled={isMoving} onDelete={handleDelete} />
+        <AppointmentForm onCancel={handleHide} onConfirm={handleConfirm} data={formattedData} isProcessing={isProcessing} isEnabled={isMoving} onDelete={handleDelete} />
       )}
     </BaseDrawer>
   );

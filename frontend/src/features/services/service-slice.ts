@@ -17,9 +17,8 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
     }),
     updateService: builder.mutation({
       query: (request) => ({
-        url: BASE_URL,
+        url: `${BASE_URL}/${request.id}`,
         method: "PATCH",
-
         body: JSON.stringify({
           id: request.id,
           name: request.name,
@@ -44,7 +43,7 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
     }),
     deleteService: builder.mutation({
       query: (request) => ({
-        url: BASE_URL,
+        url: `${BASE_URL}/${request.id}`,
         method: "DELETE",
 
         body: JSON.stringify({

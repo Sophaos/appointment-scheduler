@@ -16,12 +16,11 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
     }),
     updateExpert: builder.mutation({
       query: (request) => ({
-        url: BASE_URL,
+        url: `${BASE_URL}/${request.id}`,
         method: "PATCH",
         body: JSON.stringify({
           id: request.id,
           nickname: request.nickname,
-          // serviceIdList: request.serviceIdList.join(";"),
           color: request.color,
         }),
       }),
@@ -31,10 +30,8 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
       query: (request) => ({
         url: BASE_URL,
         method: "POST",
-
         body: JSON.stringify({
           nickname: request.nickname,
-          // serviceIdList: request.serviceIdList.join(";"),
           color: request.color,
         }),
       }),
@@ -42,7 +39,7 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
     }),
     deleteExpert: builder.mutation({
       query: (request) => ({
-        url: BASE_URL,
+        url: `${BASE_URL}/${request.id}`,
         method: "DELETE",
         body: JSON.stringify({
           id: request,

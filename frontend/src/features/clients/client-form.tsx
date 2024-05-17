@@ -27,7 +27,7 @@ const clientFormSchema = z
     return true;
   });
 
-export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseFormProps<Client>) => {
+export const ClientForm = ({ onCancel, onConfirm, data, isProcessing, onDelete }: BaseFormProps<Client>) => {
   const {
     handleSubmit,
     control,
@@ -107,7 +107,7 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing }: BaseForm
           />
           <Controller name="note" control={control} render={({ field }) => <InputTextarea {...field} placeholder="Allergy, Specifications, etc." />} />
         </div>
-        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} />
+        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} handleDelete={onDelete} />
       </div>
     </form>
   );

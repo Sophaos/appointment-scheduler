@@ -22,15 +22,11 @@ export const ServicesPage = () => {
     setId(row.id);
   };
 
-  const handleDelete = () => {
-    console.log("handle delete");
-  };
-
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>An error occured.</div>;
   return (
     <>
-      <BaseTable onEdit={handleEdit} onDelete={handleDelete} data={data ?? []} columns={columns} />;
+      <BaseTable onEdit={handleEdit} data={data ?? []} columns={columns} />;
       <ServiceDrawer data={item} />
     </>
   );

@@ -16,9 +16,8 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
     }),
     updateClient: builder.mutation({
       query: (request) => ({
-        url: BASE_URL,
+        url: `${BASE_URL}/${request.id}`,
         method: "PATCH",
-
         body: JSON.stringify({
           id: request.id,
           nickname: request.nickname,
@@ -49,9 +48,8 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
     }),
     deleteClient: builder.mutation({
       query: (request: any) => ({
-        url: BASE_URL,
+        url: `${BASE_URL}/${request.id}`,
         method: "DELETE",
-
         body: JSON.stringify({
           id: request,
         }),

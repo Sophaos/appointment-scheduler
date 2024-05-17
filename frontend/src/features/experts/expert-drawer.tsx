@@ -1,6 +1,6 @@
 import { BaseDrawer } from "shared/ui/base-drawer";
 import { useDispatch, useSelector } from "react-redux";
-import { selectIsExpertDrawerVisible, setExpertDrawerVisibility, useCreateExpertMutation, useUpdateExpertMutation } from "./expert-slice";
+import { selectIsExpertDrawerVisible, setExpertDrawerVisibility, useCreateExpertMutation, useDeleteExpertMutation, useUpdateExpertMutation } from "./expert-slice";
 import { ExpertForm } from "./expert-form";
 import { Expert } from "./expert";
 import { EntityDrawerProps } from "shared/types/entity-drawer-props";
@@ -12,6 +12,9 @@ export const ExpertDrawer = ({ data }: EntityDrawerProps<Expert>) => {
 
   const [create, { isLoading: isCreating }] = useCreateExpertMutation();
   const [update, { isLoading: isUpdating }] = useUpdateExpertMutation();
+  const [remove, { isLoading: isDeleting }] = useDeleteExpertMutation();
+
+  const isProcessing = isCreating || isUpdating || isDeleting;
 
   const handleUpdate = async (item: Expert) => {
     try {
@@ -36,9 +39,18 @@ export const ExpertDrawer = ({ data }: EntityDrawerProps<Expert>) => {
     item?.id ? handleUpdate(item) : handleAdd(item);
   };
 
+  const handleDelete = async () => {
+    try {
+      await remove(data).unwrap();
+      handleHide();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <BaseDrawer isOpen={isExpertDrawerVisible} title="Expert" onHide={handleHide}>
-      <ExpertForm onCancel={handleHide} onConfirm={handleConfirm} data={data} isProcessing={isCreating || isUpdating} />
+      <ExpertForm onCancel={handleHide} onConfirm={handleConfirm} data={data} isProcessing={isProcessing} onDelete={handleDelete} />
     </BaseDrawer>
   );
 };

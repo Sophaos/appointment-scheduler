@@ -14,7 +14,7 @@ const serviceFormSchema = z.object({
   duration: z.number().min(1, "The default duration is required."),
 });
 
-export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing }: BaseFormProps<Service>) => {
+export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing, onDelete }: BaseFormProps<Service>) => {
   const {
     handleSubmit,
     control,
@@ -51,7 +51,7 @@ export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing }: BaseFor
             {errors.color?.message}
           </small>
         </div>
-        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} />
+        <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} handleDelete={onDelete} />
       </div>
     </form>
   );
