@@ -5,18 +5,17 @@ import { ViewSelect } from "./view-select";
 import { Button } from "primereact/button";
 import { CalendarDateSelect } from "./calendar-date-select";
 import { useSelector } from "react-redux";
-import { selectView } from "./calendar-slice";
+import { selectPeriod } from "./calendar-slice";
 import { ResourceSelect } from "./resource-select";
 import { AddButton } from "./add-button";
 
-export const CalendarToolbar = ({ onView, onNavigate }: { onView: any, onNavigate: any }) => {
-  const view = useSelector(selectView);
+export const CalendarToolbar = ({ onView, onNavigate }: { onView: any; onNavigate: any }) => {
+  const view = useSelector(selectPeriod);
   const goToBack = () => onNavigate(navigate.PREVIOUS);
   const goToNext = () => onNavigate(navigate.NEXT);
   const goToToday = () => onNavigate(navigate.TODAY);
   const changeView = (view: View) => onView(view);
 
-  
   return (
     <>
       <div className="flex justify-between w-100 mb-1 p-1 pt-2">
@@ -30,7 +29,7 @@ export const CalendarToolbar = ({ onView, onNavigate }: { onView: any, onNavigat
         </div>
         <div className="flex flex-row flex-wrap gap-3">
           {(view === "day" || view === "week") && <ResourceSelect />}
-          <Button severity="info" size="small" onClick={() => window.print()} icon="pi pi-print" label="Print"/>
+          <Button severity="info" size="small" onClick={() => window.print()} icon="pi pi-print" label="Print" />
           <AddButton />
           <ViewSelect onView={changeView} />
         </div>

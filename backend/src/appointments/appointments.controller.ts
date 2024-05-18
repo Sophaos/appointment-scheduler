@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
@@ -21,7 +22,9 @@ export class AppointmentsController {
   }
 
   @Get()
-  async findAll() {
+  async findAll(@Query('period') period: string, @Query('date') date: string) {
+    // async findAll() {
+    console.log(period, new Date(date));
     return this.appointmentsService.findAll();
   }
 

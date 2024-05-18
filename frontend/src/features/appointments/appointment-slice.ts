@@ -2,13 +2,14 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
 import { Appointment, DEFAULT_APPOINTMENT } from "./appointment";
+import { CalendarDate } from "shared/types/calendar-date";
 
 const BASE_URL = "appointments";
 export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getAppointments: builder.query<Appointment[], void>({
-      query: () => ({
-        url: BASE_URL,
+    getAppointments: builder.query<Appointment[], CalendarDate>({
+      query: ({ period, date }) => ({
+        url: `${BASE_URL}?period=${period}&date=${date}`,
         method: "GET",
       }),
       providesTags: ["Appointments"],
@@ -84,6 +85,6 @@ export const { selectIsAppointmentDrawerVisible, selectAppointmentData } = appoi
 
 export const { useGetAppointmentsQuery, useUpdateAppointmentMutation, useCreateAppointmentMutation, useDeleteAppointmentMutation } = extendedAppointmentApiSlice;
 
-export const selectAppointmentsResult = extendedAppointmentApiSlice.endpoints.getAppointments.select();
+// export const selectAppointmentsResult = extendedAppointmentApiSlice.endpoints.getAppointments.select();
 
-export const selectAppointments = createSelector(selectAppointmentsResult, (appointmentsResult) => appointmentsResult?.data ?? []);
+// export const selectAppointments = createSelector(selectAppointmentsResult, (appointmentsResult) => appointmentsResult?.data ?? []);
