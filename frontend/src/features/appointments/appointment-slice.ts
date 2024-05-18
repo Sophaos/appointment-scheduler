@@ -8,8 +8,8 @@ const BASE_URL = "appointments";
 export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAppointments: builder.query<Appointment[], CalendarDate>({
-      query: ({ period, date }) => ({
-        url: `${BASE_URL}?period=${period}&date=${date}`,
+      query: ({ view, date }) => ({
+        url: `${BASE_URL}?view=${view}&date=${date}`,
         method: "GET",
       }),
       providesTags: ["Appointments"],

@@ -2,7 +2,7 @@ import { FormattedAppointment } from "features/appointments/appointment";
 import { AppointmentDrawer } from "features/appointments/appointment-drawer";
 import { useGetAppointmentsQuery } from "features/appointments/appointment-slice";
 import { BaseCalendar } from "features/calendar/base-calendar";
-import { selectCalendarDate, selectDisplayedResources, selectPeriod } from "features/calendar/calendar-slice";
+import { selectCalendarDate, selectDisplayedResources, selectView } from "features/calendar/calendar-slice";
 import { ClientDrawer } from "features/clients/client-drawer";
 import { ExpertDrawer } from "features/experts/expert-drawer";
 import { useGetExpertsQuery } from "features/experts/expert-slice";
@@ -13,8 +13,8 @@ import { getEndtime } from "shared/utils/time-utils";
 
 export const AppointmentsPage = () => {
   const date = useSelector(selectCalendarDate);
-  const period = useSelector(selectPeriod);
-  const { data: appointmentsData, error, isLoading } = useGetAppointmentsQuery({ period, date });
+  const view = useSelector(selectView);
+  const { data: appointmentsData, error, isLoading } = useGetAppointmentsQuery({ view, date });
   const { isFetching: areExpertLoading } = useGetExpertsQuery();
   const displayedResources = useSelector(selectDisplayedResources);
 

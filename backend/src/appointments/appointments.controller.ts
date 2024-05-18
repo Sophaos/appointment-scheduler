@@ -22,10 +22,8 @@ export class AppointmentsController {
   }
 
   @Get()
-  async findAll(@Query('period') period: string, @Query('date') date: string) {
-    // async findAll() {
-    console.log(period, new Date(date));
-    return this.appointmentsService.findAll();
+  async findAll(@Query('view') view: string, @Query('date') date: string) {
+    return this.appointmentsService.findAll({ view, date });
   }
 
   @Get(':id')

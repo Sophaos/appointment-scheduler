@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectPeriod, setPeriod } from "./calendar-slice";
+import { selectView, setView } from "./calendar-slice";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
 
 export const ViewSelect = ({ onView }) => {
   const dispatch = useDispatch();
-  const view = useSelector(selectPeriod);
+  const view = useSelector(selectView);
 
   const handleChange = (event: DropdownChangeEvent) => {
-    dispatch(setPeriod(event.target.value));
+    dispatch(setView(event.target.value));
 
     onView(event.target.value);
   };

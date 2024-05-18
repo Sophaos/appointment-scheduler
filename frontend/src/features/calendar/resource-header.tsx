@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 export const ResourceHeader = ({ index, label, resource }) => {
   const dispatch = useDispatch();
   const editResource = () => {
-    console.log(resource);
     // TODO: should open right form too
     dispatch(setExpertDrawerVisibility(true));
   };

@@ -3,10 +3,11 @@ import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { Appointment } from './entities/appointment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, EntityManager } from 'typeorm';
+import { Repository, EntityManager, Between } from 'typeorm';
 import { Service } from 'src/services/entities/service.entity';
 import { Client } from 'src/clients/entities/client.entity';
 import { Expert } from 'src/experts/entities/expert.entity';
+import { ReadAppointmenstDto } from './dto/read-appointments.dto';
 
 @Injectable()
 export class AppointmentsService {
@@ -39,13 +40,59 @@ export class AppointmentsService {
     await this.entityManager.save(item);
   }
 
-  async findAll() {
+  async findAll(readAppointmenstDto: ReadAppointmenstDto) {
+    const view = readAppointmenstDto.view;
+    const date = new Date(readAppointmenstDto.date);
+    let where = {};
+
+    switch (view.toLowerCase()) {
+      case 'day':
+        where = {
+          startTime: Between(
+            date,
+            new Date(date.getTime() + 24 * 60 * 60 * 1000),
+          ),
+        };
+        break;
+
+      case 'week':
+        const firstDayOfWeek = new Date(
+          date.setDate(date.getDate() - date.getDay()),
+        );
+        const lastDayOfWeek = new Date(
+          firstDayOfWeek.getTime() + 7 * 24 * 60 * 60 * 1000,
+        );
+        where = {
+          startTime: Between(firstDayOfWeek, lastDayOfWeek),
+        };
+        break;
+
+      case 'month':
+        const firstDayOfMonth = new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          1,
+        );
+        const lastDayOfMonth = new Date(
+          firstDayOfMonth.getFullYear(),
+          firstDayOfMonth.getMonth() + 1,
+          1,
+        );
+        where = {
+          startTime: Between(firstDayOfMonth, lastDayOfMonth),
+        };
+        break;
+
+      default:
+        throw new Error('Invalid view specified.');
+    }
     return this.appointmentsRepository.find({
       relations: {
         client: true,
         service: true,
         expert: true,
       },
+      where,
     });
   }
 

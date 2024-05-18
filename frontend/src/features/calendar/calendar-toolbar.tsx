@@ -5,12 +5,12 @@ import { ViewSelect } from "./view-select";
 import { Button } from "primereact/button";
 import { CalendarDateSelect } from "./calendar-date-select";
 import { useSelector } from "react-redux";
-import { selectPeriod } from "./calendar-slice";
+import { selectView } from "./calendar-slice";
 import { ResourceSelect } from "./resource-select";
 import { AddButton } from "./add-button";
 
 export const CalendarToolbar = ({ onView, onNavigate }: { onView: any; onNavigate: any }) => {
-  const view = useSelector(selectPeriod);
+  const view = useSelector(selectView);
   const goToBack = () => onNavigate(navigate.PREVIOUS);
   const goToNext = () => onNavigate(navigate.NEXT);
   const goToToday = () => onNavigate(navigate.TODAY);

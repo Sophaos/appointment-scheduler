@@ -14,7 +14,7 @@ import { CalendarToolbar } from "./calendar-toolbar";
 import { Appointment, DEFAULT_APPOINTMENT, FormattedAppointment } from "features/appointments/appointment";
 import { useDispatch } from "react-redux";
 import { setAppointmentData, setAppointmentDrawerVisibility } from "features/appointments/appointment-slice";
-import { setCalendarDate, setCalendarDateAndPeriod, setIsMoving } from "./calendar-slice";
+import { setCalendarDate, setCalendarDateAndView, setIsMoving } from "./calendar-slice";
 import { Expert } from "features/experts/expert";
 import { getFormattedDate, getMinutesDifferences } from "shared/utils/time-utils";
 
@@ -145,7 +145,7 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
 
   const handleNavigate = useCallback(
     (newDate: Date, view: View, action: NavigateAction) => {
-      if (action === "DATE") dispatch(setCalendarDateAndPeriod({ view: "day", date: getFormattedDate(newDate) }));
+      if (action === "DATE") dispatch(setCalendarDateAndView({ view: "day", date: getFormattedDate(newDate) }));
       else dispatch(setCalendarDate(getFormattedDate(newDate)));
     },
     [dispatch]

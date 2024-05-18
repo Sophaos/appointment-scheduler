@@ -1,6 +1,6 @@
 export interface CalendarDate {
-  period: Period;
+  view: View;
   date: string;
 }
 
-export type Period = "day" | "agenda" | "week" | "month";
+export type View = "day" | "agenda" | "week" | "month";

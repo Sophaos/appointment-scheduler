@@ -105,7 +105,6 @@ export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing, isEna
                   onChange={(e) => {
                     field.onChange(e.value);
                     setValue("duration", e.value.duration);
-                    console.log(e.value);
                     trigger("duration");
                   }}
                   options={serviceOptions}

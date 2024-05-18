@@ -15,7 +15,6 @@ export interface BaseTableProps<T> {
 }
 
 export const BaseTable = <T,>({ onEdit, columns, data }: BaseTableProps<T>) => {
-  // const onEdit = () => console.log(rowData);
   const actionBodyTemplate = (rowData: T) => {
     return (
       <React.Fragment>
