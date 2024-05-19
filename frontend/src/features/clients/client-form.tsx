@@ -1,13 +1,11 @@
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "react-toastify";
-import { InputMask } from "primereact/inputmask";
-import { InputText } from "primereact/inputtext";
-import { InputTextarea } from "primereact/inputtextarea";
 import { FormActions } from "shared/ui/form-actions";
 import { BaseFormProps } from "shared/types/base-form-props";
 import { Client, DEFAULT_CLIENT } from "./client";
+import { FormInputText } from "shared/ui/form-input-text";
 
 const clientFormSchema = z
   .object({
@@ -31,7 +29,7 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing, onDelete }
   const {
     handleSubmit,
     control,
-    formState: { isDirty, errors },
+    formState: { isDirty },
   } = useForm({
     defaultValues: data ?? DEFAULT_CLIENT,
     resolver: zodResolver(clientFormSchema),
@@ -45,67 +43,12 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing, onDelete }
     <form onSubmit={handleSubmit(onSubmit)} className="h-full">
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col space-y-3">
-          <Controller
-            name="nickname"
-            control={control}
-            render={({ field }) => (
-              <>
-                <InputText {...field} placeholder="Nickname" invalid={!!errors.nickname} aria-describedby="nickname-error" />
-                <small id="nickname-error" className="text-red-600">
-                  {errors.nickname?.message}
-                </small>
-              </>
-            )}
-          />
-          <Controller
-            name="firstName"
-            control={control}
-            render={({ field }) => (
-              <>
-                <InputText {...field} placeholder="First Name" invalid={!!errors.firstName} aria-describedby="firstName-error" />
-                <small id="firstName-error" className="text-red-600">
-                  {errors.firstName?.message}
-                </small>
-              </>
-            )}
-          />
-          <Controller
-            name="lastName"
-            control={control}
-            render={({ field }) => (
-              <>
-                <InputText {...field} placeholder="Last Name" invalid={!!errors.lastName} aria-describedby="lastName-error" />
-                <small id="lastName-error" className="text-red-600">
-                  {errors.lastName?.message}
-                </small>
-              </>
-            )}
-          />
-          <Controller
-            name="phoneNumber"
-            control={control}
-            render={({ field }) => (
-              <>
-                <InputMask {...field} id="phone" mask="(999) 999-9999" placeholder="(999) 999-9999" aria-describedby="phoneNumber-error" />
-                <small id="phoneNumber-error" className="text-red-600">
-                  {errors.phoneNumber?.message}
-                </small>
-              </>
-            )}
-          />
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => (
-              <>
-                <InputText {...field} placeholder="example@example.com" invalid={!!errors.email} />
-                <small id="username-error" className="text-red-600">
-                  {errors.email?.message}
-                </small>
-              </>
-            )}
-          />
-          <Controller name="note" control={control} render={({ field }) => <InputTextarea {...field} placeholder="Allergy, Specifications, etc." />} />
+          <FormInputText label="Nickname" name="nickname" control={control} />
+          <FormInputText label="First Name" name="firstName" control={control} />
+          <FormInputText label="Last Name" name="lastName" control={control} />
+          <FormInputText label="Phone Number" name="phoneNumber" control={control} mask="(999) 999-9999" type="mask" />
+          <FormInputText label="Email" name="email" control={control} />
+          <FormInputText label="Note" name="note" control={control} type="area" />
         </div>
         <FormActions onCancel={onCancel} isDirty={isDirty} hasId={!!data?.id} isProcessing={isProcessing} handleDelete={onDelete} />
       </div>

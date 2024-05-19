@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
-import { EntityOption } from "shared/types/entity-option";
 import { Service } from "./service";
 
 const BASE_URL = "services";
@@ -80,13 +79,3 @@ export const { useGetServicesQuery, useUpdateServiceMutation, useCreateServiceMu
 export const selectServicesResult = extendedServiceApiSlice.endpoints.getServices.select();
 
 export const selectServices = createSelector(selectServicesResult, (servicesResult) => servicesResult?.data ?? []);
-
-export const selectServiceOptions = createSelector(selectServices, (services) =>
-  services?.map(
-    (c) =>
-      ({
-        id: c.id,
-        label: c.name,
-      } as EntityOption)
-  )
-);

@@ -29,7 +29,6 @@ export const CalendarToolbar = ({ onView, onNavigate }: { onView: any; onNavigat
         </div>
         <div className="flex flex-row flex-wrap gap-3">
           {(view === "day" || view === "week") && <ResourceSelect />}
-          <Button severity="info" size="small" onClick={() => window.print()} icon="pi pi-print" label="Print" />
           <AddButton />
           <ViewSelect onView={changeView} />
         </div>

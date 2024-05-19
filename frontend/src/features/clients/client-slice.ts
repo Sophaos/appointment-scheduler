@@ -2,7 +2,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
 import { Client } from "./client";
-import { EntityOption } from "shared/types/entity-option";
 
 const BASE_URL = "clients";
 export const extendedClientApiSlice = apiSlice.injectEndpoints({
@@ -84,13 +83,3 @@ export const { useGetClientsQuery, useUpdateClientMutation, useCreateClientMutat
 export const selectClientsResult = extendedClientApiSlice.endpoints.getClients.select();
 
 export const selectClients = createSelector(selectClientsResult, (clientsResult) => clientsResult?.data ?? []);
-
-export const selectClientOptions = createSelector(selectClients, (clients) =>
-  clients?.map(
-    (c) =>
-      ({
-        id: c.id,
-        label: c.nickname,
-      } as EntityOption)
-  )
-);
