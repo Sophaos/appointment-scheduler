@@ -1,29 +1,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { toast } from "react-toastify";
 import { FormActions } from "shared/ui/form-actions";
 import { BaseFormProps } from "shared/types/base-form-props";
 import { Client, DEFAULT_CLIENT } from "./client";
 import { FormInputText } from "shared/ui/form-input-text";
-
-const clientFormSchema = z
-  .object({
-    nickname: z.string().min(2, "The nickname must be at least 2 characters.").optional().or(z.literal("")),
-    firstName: z.string().optional(),
-    lastName: z.string().optional(),
-    phoneNumber: z.string().min(1, "The phone number is required.").optional().or(z.literal("")),
-    note: z.string().optional(),
-    email: z.string().optional(),
-  })
-  .partial()
-  .refine((data) => {
-    if (data.nickname === "" && data.phoneNumber === "") {
-      toast.warn("The nickname or phone number is required.");
-      return false;
-    }
-    return true;
-  });
+import { ClientSchema } from "./client-schema";
 
 export const ClientForm = ({ onCancel, onConfirm, data, isProcessing, onDelete }: BaseFormProps<Client>) => {
   const {
@@ -32,7 +13,7 @@ export const ClientForm = ({ onCancel, onConfirm, data, isProcessing, onDelete }
     formState: { isDirty },
   } = useForm({
     defaultValues: data ?? DEFAULT_CLIENT,
-    resolver: zodResolver(clientFormSchema),
+    resolver: zodResolver(ClientSchema),
   });
 
   const onSubmit = (form: Client) => {

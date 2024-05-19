@@ -12,5 +12,5 @@ export const CalendarDateSelect = () => {
     dispatch(setCalendarDate(getFormattedDate(event.value ?? new Date())));
   };
 
-  return <Calendar value={formattedCalendarDate} showIcon dateFormat="DD, MM, yy" onChange={handleDateChange} />;
+  return <Calendar value={formattedCalendarDate} showIcon dateFormat="DD dd, MM, yy" onChange={handleDateChange} />;
 };

@@ -1,16 +1,11 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { BaseFormProps } from "shared/types/base-form-props";
 import { DEFAULT_EXPERT, Expert } from "./expert";
 import { FormActions } from "shared/ui/form-actions";
 import { FormInputText } from "shared/ui/form-input-text";
 import { FormColorPicker } from "shared/ui/form-color-picker";
-
-const expertFormSchema = z.object({
-  nickname: z.string().min(2, "The nickname must be at least 2 characters."),
-  color: z.string().min(1, "A color must be selected."),
-});
+import { ExpertSchema } from "./expert-schema";
 
 export const ExpertForm = ({ onCancel, onConfirm, data, isProcessing, onDelete }: BaseFormProps<Expert>) => {
   const {
@@ -18,7 +13,7 @@ export const ExpertForm = ({ onCancel, onConfirm, data, isProcessing, onDelete }
     control,
     formState: { isDirty },
   } = useForm({
-    resolver: zodResolver(expertFormSchema),
+    resolver: zodResolver(ExpertSchema),
     defaultValues: data ?? DEFAULT_EXPERT,
   });
 

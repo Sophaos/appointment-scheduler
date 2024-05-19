@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { BaseFormProps } from "shared/types/base-form-props";
 import { FormattedAppointment } from "./appointment";
 import { FormActions } from "shared/ui/form-actions";
@@ -15,14 +14,7 @@ import { FormSelectButton } from "shared/ui/form-select-button";
 import { FormCalendar } from "shared/ui/form-calendar";
 import { FormInputNumber } from "shared/ui/form-input-number";
 import { FormDropdown } from "shared/ui/form-dropdown";
-
-const appointmentFormSchema = z.object({
-  start: z.string().datetime(),
-  expert: z.number(),
-  client: z.number(),
-  service: z.number(),
-  notes: z.string(),
-});
+import { AppointmentSchema } from "./appointment-schema";
 
 const STATUS_OPTIONS: EntityOption[] = [
   { id: "IDLE", label: "Idle" },
@@ -40,7 +32,7 @@ export const AppointmentForm = ({ onCancel, onConfirm, data, isProcessing, isEna
     trigger,
     formState: { isDirty },
   } = useForm({
-    // resolver: zodResolver(appointmentFormSchema),
+    resolver: zodResolver(AppointmentSchema),
     defaultValues: data,
   });
 

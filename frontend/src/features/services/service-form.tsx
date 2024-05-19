@@ -1,18 +1,12 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { DEFAULT_SERVICE, Service } from "./service";
 import { BaseFormProps } from "shared/types/base-form-props";
 import { FormActions } from "shared/ui/form-actions";
 import { FormInputText } from "shared/ui/form-input-text";
 import { FormColorPicker } from "shared/ui/form-color-picker";
 import { FormInputNumber } from "shared/ui/form-input-number";
-
-const serviceFormSchema = z.object({
-  name: z.string().min(1, "The name must be at least 1 character."),
-  color: z.string().min(1, "A color must be selected."),
-  duration: z.number().min(1, "The default duration is required."),
-});
+import { ServiceSchema } from "./service-schema";
 
 export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing, onDelete }: BaseFormProps<Service>) => {
   const {
@@ -21,7 +15,7 @@ export const ServiceForm = ({ onCancel, onConfirm, data, isProcessing, onDelete 
     formState: { isDirty },
   } = useForm({
     defaultValues: data ?? DEFAULT_SERVICE,
-    resolver: zodResolver(serviceFormSchema),
+    resolver: zodResolver(ServiceSchema),
   });
 
   const onSubmit = (formData: Service) => {
