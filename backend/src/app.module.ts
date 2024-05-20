@@ -6,20 +6,11 @@ import { ClientsModule } from './clients/clients.module';
 import { ExpertsModule } from './experts/experts.module';
 import { ServicesModule } from './services/services.module';
 import { AppointmentsModule } from './appointments/appointments.module';
+import { dataSourceOptions } from './database/data-source';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      // host: 'db', // revert when using full docker yaml
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'mysecretpassword',
-      database: 'postgres',
-      synchronize: true,
-      autoLoadEntities: true,
-    }),
+    TypeOrmModule.forRoot(dataSourceOptions),
     ClientsModule,
     ExpertsModule,
     ServicesModule,

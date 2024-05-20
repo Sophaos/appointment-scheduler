@@ -6,8 +6,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   const config = new DocumentBuilder()
-    .setTitle('Barber Shop Event Planner')
-    .setDescription('Barber Shop Event Planner API')
+    .setTitle('Appointments Scheduler')
+    .setDescription('Appointments Scheduler API')
     .setVersion('1.0')
     .addTag('API')
     .build();
