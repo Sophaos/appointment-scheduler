@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const ClientSchema = z
   .object({
+    id: z.number(),
     nickname: z.string().min(2, "The nickname must be at least 2 characters.").optional().or(z.literal("")),
     firstName: z.string().optional(),
     lastName: z.string().optional(),

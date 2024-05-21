@@ -4,6 +4,7 @@ import { ServiceSchema } from "features/services/service-schema";
 import { z } from "zod";
 
 export const AppointmentSchema = z.object({
+  id: z.number(),
   start: z.date(),
   duration: z.number().gte(30),
   expert: ExpertSchema,
