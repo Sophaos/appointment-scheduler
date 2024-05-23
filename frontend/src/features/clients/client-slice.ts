@@ -2,6 +2,7 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
 import { Client } from "./client";
+import { baseQueryToast } from "shared/utils/toast-utils";
 
 const BASE_URL = "clients";
 export const extendedClientApiSlice = apiSlice.injectEndpoints({
@@ -27,6 +28,9 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
           note: request.note,
         }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The client has been updated successfully.");
+      },
       invalidatesTags: ["Clients"],
     }),
     createClient: builder.mutation({
@@ -43,6 +47,9 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
           note: request.note,
         }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The client has been created successfully.");
+      },
       invalidatesTags: ["Clients"],
     }),
     deleteClient: builder.mutation({
@@ -53,6 +60,9 @@ export const extendedClientApiSlice = apiSlice.injectEndpoints({
           id: request,
         }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The client has been deleted successfully.");
+      },
       invalidatesTags: ["Clients"],
     }),
   }),

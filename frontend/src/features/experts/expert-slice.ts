@@ -2,6 +2,7 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
 import { Expert } from "./expert";
+import { baseQueryToast } from "shared/utils/toast-utils";
 
 const BASE_URL = "experts";
 export const extendedExpertApiSlice = apiSlice.injectEndpoints({
@@ -23,6 +24,9 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
           color: request.color,
         }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The expert has been updated successfully.");
+      },
       invalidatesTags: ["Experts"],
     }),
     createExpert: builder.mutation({
@@ -34,6 +38,9 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
           color: request.color,
         }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The expert has been created successfully.");
+      },
       invalidatesTags: ["Experts"],
     }),
     deleteExpert: builder.mutation({
@@ -44,6 +51,9 @@ export const extendedExpertApiSlice = apiSlice.injectEndpoints({
           id: request,
         }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The expert has been deleted successfully.");
+      },
       invalidatesTags: ["Experts"],
     }),
   }),

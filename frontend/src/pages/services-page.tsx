@@ -12,7 +12,7 @@ export const ServicesPage = () => {
   const item = id ? data?.find((i) => i.id === id) : DEFAULT_SERVICE;
 
   const columns: TableColumnProp[] = [
-    { field: "name", header: "name" },
+    { field: "name", header: "Name" },
     { field: "duration", header: "Duration" },
     { field: "color", header: "Color" },
   ];

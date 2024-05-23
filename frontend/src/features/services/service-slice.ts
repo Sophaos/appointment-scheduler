@@ -2,6 +2,7 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
 import { Service } from "./service";
+import { baseQueryToast } from "shared/utils/toast-utils";
 
 const BASE_URL = "services";
 
@@ -25,6 +26,9 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
           duration: request.duration,
         }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The service has been updated successfully.");
+      },
       invalidatesTags: ["Services"],
     }),
     createService: builder.mutation({
@@ -38,6 +42,9 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
           duration: request.duration,
         }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The service has been created successfully.");
+      },
       invalidatesTags: ["Services"],
     }),
     deleteService: builder.mutation({
@@ -49,6 +56,9 @@ export const extendedServiceApiSlice = apiSlice.injectEndpoints({
           id: request,
         }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The service has been deleted successfully.");
+      },
       invalidatesTags: ["Services"],
     }),
   }),

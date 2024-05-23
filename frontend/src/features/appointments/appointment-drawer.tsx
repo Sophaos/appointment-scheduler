@@ -42,7 +42,6 @@ export const AppointmentDrawer = () => {
 
   const handleUpdate = async (item: Appointment) => {
     try {
-      console.log(item);
       await update(item).unwrap();
       handleHide();
     } catch (error) {

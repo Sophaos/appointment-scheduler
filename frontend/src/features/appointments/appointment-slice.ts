@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { apiSlice } from "api/api-slice";
 import { Appointment, DEFAULT_APPOINTMENT } from "./appointment";
 import { CalendarDate } from "shared/types/calendar-date";
+import { baseQueryToast } from "shared/utils/toast-utils";
 
 const BASE_URL = "appointments";
 export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
@@ -29,6 +30,9 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
           status: request.status,
         }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The appointment has been updated successfully.");
+      },
       invalidatesTags: ["Appointments"],
     }),
     createAppointment: builder.mutation({
@@ -45,6 +49,9 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
           status: request.status,
         }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The appointment has been created successfully.");
+      },
       invalidatesTags: ["Appointments"],
     }),
     deleteAppointment: builder.mutation({
@@ -53,6 +60,9 @@ export const extendedAppointmentApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
         body: JSON.stringify({ id: request.id }),
       }),
+      async onQueryStarted(_, { queryFulfilled }) {
+        baseQueryToast(queryFulfilled, "The appointment has been deleted successfully.");
+      },
       invalidatesTags: ["Appointments"],
     }),
   }),

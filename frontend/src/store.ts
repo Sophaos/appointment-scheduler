@@ -5,7 +5,6 @@ import { calendarSlice } from "features/calendar/calendar-slice";
 import { clientSlice } from "features/clients/client-slice";
 import { expertSlice } from "features/experts/expert-slice";
 import { serviceSlice } from "features/services/service-slice";
-import { toastMiddleware } from "middleware/toast-middleware";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +15,5 @@ export const store = configureStore({
     service: serviceSlice.reducer,
     expert: expertSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware, toastMiddleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
 });
