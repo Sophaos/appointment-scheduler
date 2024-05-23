@@ -64,7 +64,7 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
 
   // TODO: add closed days
   const dayPropGetter = useCallback(
-    (date: any) => ({
+    (date: Date) => ({
       ...(moment(date).day() === 1 && {
         style: {
           background: "repeating-linear-gradient(60deg, #F3F1F2, #F3F1F2 4px, #EBE8E9 4px, #EBE8E9 8px)",
@@ -92,7 +92,7 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
 
     const hour = moment(date).hour();
     const intervalStart = Math.floor(hour);
-    const backgroundColor = intervalStart % 2 === 0 ? "#d5dbe9" : "white";
+    const backgroundColor = intervalStart % 2 === 0 ? "lightgray" : "white";
 
     return {
       className: "slotDefault",

@@ -14,9 +14,11 @@ import { getEndtime } from "shared/utils/time-utils";
 export const AppointmentsPage = () => {
   const date = useSelector(selectCalendarDate);
   const view = useSelector(selectView);
-  const { data: appointmentsData, error, isLoading } = useGetAppointmentsQuery({ view, date });
-  const { isFetching: areExpertLoading } = useGetExpertsQuery();
+  const { data: appointmentsData, error, isFetching: areAppointmentsFetching } = useGetAppointmentsQuery({ view, date });
+  const { isFetching: areExpertFetching } = useGetExpertsQuery();
   const displayedResources = useSelector(selectDisplayedResources);
+
+  const isFetching = areAppointmentsFetching || areExpertFetching;
 
   const formatedAppointments: FormattedAppointment[] = useMemo(
     () =>
@@ -27,6 +29,9 @@ export const AppointmentsPage = () => {
       })) ?? [],
     [appointmentsData]
   );
+
+  if (isFetching) return <div>Loading...</div>;
+  if (error) return <div>An error occured.</div>;
 
   return (
     <>
