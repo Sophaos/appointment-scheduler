@@ -3,9 +3,10 @@
 A web app for scheduling appointments between clients and service experts. The appointments are displayed in an interactive calendar.
 
 <p align="center">
-  <img src="https://github.com/Sophaos/mini-mal-ng/assets/54873061/5d49cb79-7c52-49dc-9830-586696eab479" width="45%">
-  <img src="https://github.com/Sophaos/mini-mal-ng/assets/54873061/500698f1-b1e5-441c-a6ee-e4fd2aa1f0c3" width="45%">
+  <img src="https://github.com/Sophaos/appointment-scheduler/assets/54873061/dbabb978-319e-4a7c-804f-9e298f5fb8d4" width="45%">
+  <img src="https://github.com/Sophaos/appointment-scheduler/assets/54873061/d105e700-fd4d-490f-b6ba-5d601d1ef985" width="45%">
 </p>
+
 
 ## Motivation
 
@@ -37,6 +38,7 @@ I was motivated to practice React with TypeScript for the front end and to learn
 - TailwindCSS
 - PrimeReact
 - react-toastify
+- Faker.js
 
 ## How to run
 
