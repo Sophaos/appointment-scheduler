@@ -14,10 +14,7 @@ I was motivated to practice React with TypeScript for the front end and to learn
 
 ## Features
 
-- Add an appointment
-- Add a client
-- Add an expert
-- Add a service
+- Create/Read/Update/Delete an appointment/client/expert/service
 - Resource scheduling for expert assignments
 - Drag and drop appointments
 - Resize appointments to change their duration
