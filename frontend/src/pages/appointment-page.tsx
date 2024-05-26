@@ -14,7 +14,7 @@ import { getEndtime } from "shared/utils/time-utils";
 export const AppointmentsPage = () => {
   const date = useSelector(selectCalendarDate);
   const view = useSelector(selectView);
-  const { data: appointmentsData, error, isFetching: areAppointmentsFetching } = useGetAppointmentsQuery({ view, date });
+  const { data: appointmentsData, error, isFetching: areAppointmentsFetching } = useGetAppointmentsQuery({ view: view === "agenda" ? "day" : view, date });
   const { isFetching: areExpertFetching } = useGetExpertsQuery();
   const displayedResources = useSelector(selectDisplayedResources);
 

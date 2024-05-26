@@ -20,6 +20,7 @@ import { getFormattedDate, getMinutesDifferences } from "shared/utils/time-utils
 
 const DnDCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
+const OUT_OF_BOUND_DURATION = 1440;
 
 export interface BaseCalendarProps {
   events: FormattedAppointment[];
@@ -178,7 +179,13 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
       const { start, end, resourceId } = event;
       const resource = resources?.find((item) => item.id === resourceId) ?? undefined;
       dispatch(setAppointmentDrawerVisibility(true));
-      dispatch(setAppointmentData({ ...DEFAULT_APPOINTMENT, startTime: start.toISOString(), duration: getMinutesDifferences(start, end), expert: resource }));
+      const duration = getMinutesDifferences(start, end);
+      if (duration === OUT_OF_BOUND_DURATION) {
+        start.setHours(10);
+        dispatch(setAppointmentData({ ...DEFAULT_APPOINTMENT, startTime: start.toISOString(), expert: resource }));
+      } else {
+        dispatch(setAppointmentData({ ...DEFAULT_APPOINTMENT, startTime: start.toISOString(), duration: getMinutesDifferences(start, end), expert: resource }));
+      }
     },
     [dispatch, resources]
   );
