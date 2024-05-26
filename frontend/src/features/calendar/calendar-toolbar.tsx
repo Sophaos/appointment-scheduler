@@ -4,13 +4,13 @@ import { View, Navigate as navigate } from "react-big-calendar";
 import { ViewSelect } from "./view-select";
 import { Button } from "primereact/button";
 import { CalendarDateSelect } from "./calendar-date-select";
-import { useSelector } from "react-redux";
-import { selectView } from "./calendar-slice";
 import { ResourceSelect } from "./resource-select";
 import { AddButton } from "./add-button";
+import { useSearchParams } from "react-router-dom";
 
 export const CalendarToolbar = ({ onView, onNavigate }: { onView: any; onNavigate: any }) => {
-  const view = useSelector(selectView);
+  const [searchParams] = useSearchParams();
+  const view = searchParams.get("view") || "day";
   const goToBack = () => onNavigate(navigate.PREVIOUS);
   const goToNext = () => onNavigate(navigate.NEXT);
   const goToToday = () => onNavigate(navigate.TODAY);

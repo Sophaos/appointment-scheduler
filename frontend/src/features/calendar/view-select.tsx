@@ -1,14 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { selectView, setView } from "./calendar-slice";
 import { Dropdown, DropdownChangeEvent } from "primereact/dropdown";
+import { useSearchParams } from "react-router-dom";
 
 export const ViewSelect = ({ onView }) => {
-  const dispatch = useDispatch();
-  const view = useSelector(selectView);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const view = searchParams.get("view") || "day";
 
   const handleChange = (event: DropdownChangeEvent) => {
-    dispatch(setView(event.target.value));
-
+    setSearchParams({ view: event.target.value });
     onView(event.target.value);
   };
 

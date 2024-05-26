@@ -17,6 +17,7 @@ import { setAppointmentData, setAppointmentDrawerVisibility } from "features/app
 import { setCalendarDate, setCalendarDateAndView, setIsMoving } from "./calendar-slice";
 import { Expert } from "features/experts/expert";
 import { getFormattedDate, getMinutesDifferences } from "shared/utils/time-utils";
+import { useSearchParams } from "react-router-dom";
 
 const DnDCalendar = withDragAndDrop(Calendar);
 const localizer = momentLocalizer(moment);
@@ -30,6 +31,8 @@ export interface BaseCalendarProps {
 
 export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => {
   const dispatch = useDispatch();
+  const [searchParams] = useSearchParams();
+  const view = (searchParams.get("view") || "day") as View;
 
   const formats: any = useMemo(
     () => ({
@@ -205,7 +208,7 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
   return (
     <div className="myCustomHeight">
       <DnDCalendar
-        defaultView="day"
+        defaultView={view}
         formats={formats}
         components={components}
         dayLayoutAlgorithm="no-overlap"

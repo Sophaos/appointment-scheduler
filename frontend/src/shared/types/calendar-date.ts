@@ -1,6 +1,4 @@
 export interface CalendarDate {
-  view: View;
+  view: string;
   date: string;
 }
-
-export type View = "day" | "agenda" | "week" | "month";
