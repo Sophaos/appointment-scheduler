@@ -1,15 +1,16 @@
 import { Calendar } from "primereact/calendar";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCalendarDate, setCalendarDate } from "./calendar-slice";
 import { FormEvent } from "primereact/ts-helpers";
 import { getFormattedDate } from "shared/utils/time-utils";
+import { useSearchParams } from "react-router-dom";
 
 export const CalendarDateSelect = () => {
-  const dispatch = useDispatch();
-  const calendarDate = useSelector(selectCalendarDate);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const view = searchParams.get("view") || "day";
+
+  const calendarDate = searchParams.get("date") || getFormattedDate(new Date());
   const formattedCalendarDate = calendarDate ? new Date(calendarDate) : new Date();
   const handleDateChange = (event: FormEvent<Date>) => {
-    dispatch(setCalendarDate(getFormattedDate(event.value ?? new Date())));
+    setSearchParams({ view, date: getFormattedDate(event.value ?? new Date()) });
   };
 
   return <Calendar value={formattedCalendarDate} showIcon dateFormat="DD dd, MM, yy" onChange={handleDateChange} />;

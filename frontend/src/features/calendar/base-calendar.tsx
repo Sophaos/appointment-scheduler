@@ -14,7 +14,7 @@ import { CalendarToolbar } from "./calendar-toolbar";
 import { Appointment, DEFAULT_APPOINTMENT, FormattedAppointment } from "features/appointments/appointment";
 import { useDispatch } from "react-redux";
 import { setAppointmentData, setAppointmentDrawerVisibility } from "features/appointments/appointment-slice";
-import { setCalendarDate, setCalendarDateAndView, setIsMoving } from "./calendar-slice";
+import { setIsMoving } from "./calendar-slice";
 import { Expert } from "features/experts/expert";
 import { getFormattedDate, getMinutesDifferences } from "shared/utils/time-utils";
 import { useSearchParams } from "react-router-dom";
@@ -31,8 +31,9 @@ export interface BaseCalendarProps {
 
 export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => {
   const dispatch = useDispatch();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const view = (searchParams.get("view") || "day") as View;
+  const calendarDate = searchParams.get("date") || getFormattedDate(new Date());
 
   const formats: any = useMemo(
     () => ({
@@ -149,10 +150,13 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
 
   const handleNavigate = useCallback(
     (newDate: Date, view: View, action: NavigateAction) => {
-      if (action === "DATE") dispatch(setCalendarDateAndView({ view: "day", date: getFormattedDate(newDate) }));
-      else dispatch(setCalendarDate(getFormattedDate(newDate)));
+      if (action === "DATE") {
+        setSearchParams({ view: "day", date: getFormattedDate(newDate) });
+      } else {
+        setSearchParams({ view, date: getFormattedDate(newDate) });
+      }
     },
-    [dispatch]
+    [setSearchParams]
   );
 
   const handleEventResize = useCallback(
