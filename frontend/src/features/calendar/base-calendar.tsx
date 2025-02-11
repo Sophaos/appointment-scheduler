@@ -33,7 +33,6 @@ export const BaseCalendar = ({ events, data, resources }: BaseCalendarProps) => 
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const view = (searchParams.get("view") || "day") as View;
-  const calendarDate = searchParams.get("date") || getFormattedDate(new Date());
 
   const formats: any = useMemo(
     () => ({
