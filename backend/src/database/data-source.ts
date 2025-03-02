@@ -8,8 +8,8 @@ import { SeederOptions } from 'typeorm-extension';
 
 export const dataSourceOptions: TypeOrmModuleOptions & SeederOptions = {
   type: 'postgres',
-  // host: 'db', // revert when using full docker yaml
-  host: 'localhost',
+  host: 'db', // revert when using full docker yaml
+  // host: 'localhost',
   port: 5432,
   username: 'postgres',
   password: 'mysecretpassword',
